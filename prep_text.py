@@ -30,8 +30,7 @@ def main():
 	# parse command line arguments
 	(options, args) = parser.parse_args()
 	if len(args) < 1:
-		parser.error("Must specify at least one directory containing documents to preprocess")	
-	log.basicConfig(level=log.INFO, format='%(message)s')
+		parser.error("Must specify at least one directory of file path")	
 	# control level of log output
 	log_level = log.DEBUG if options.debug else log.INFO
 	log.basicConfig(level=log_level, format='%(message)s')
@@ -95,14 +94,14 @@ def main():
 	if len(labels) >= 2:
 		log.info("Document categories: %d labels - %s" % (len(labels), label_counts))
 
-	# Load stopwords, if any file path has been specified
+	# load stopwords, if any file path has been specified
 	stopwords = set()
 	if not options.stoplist_file is None:
-		log.info("Using custom stopwords from %s" % options.stoplist_file)
 		stopwords = text.util.load_word_set(options.stoplist_file)
+		log.info("Using %d stopwords from %s" % (len(stopwords), options.stoplist_file) )
 
 	# Convert the documents to a vector representation
-	log.info("Pre-processing data (%d stopwords, tfidf=%s, normalize=%s, min_df=%d) ..." % 
+	log.info("Preprocessing data (%d stopwords, tfidf=%s, normalize=%s, min_df=%d) ..." % 
 		(len(stopwords), options.apply_tfidf, options.apply_norm, options.min_df))
 	(X,terms) = text.util.preprocess(documents, stopwords, min_df = options.min_df, 
 		apply_tfidf = options.apply_tfidf, apply_norm = options.apply_norm)
