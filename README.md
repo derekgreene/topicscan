@@ -18,7 +18,7 @@ Tested with Python 3.7, and requiring the following packages, which are availabl
 - scikit-learn, gensim
 - dash, dash-table, dash-bootstrap-components
 
-## Running the TopicScan Interface
+## Usage: TopicScan Web Interface
 
 To start the TopicScan interface, run the script *scan.py*. By default this will search the current directory and its subdirectories for topic model and word embedding metadata files:
 
@@ -41,3 +41,19 @@ The different pages of TopicScan interface can also be run individually. In each
 ```python topicscan/scan_scatter.py  ~/sample/models/bbc/nmf_k05/bbc_k05_001.meta```
 
 ```python topicscan/scan_heatmap.py  ~/sample/models/bbc/nmf_k05/bbc_k05_001.meta```
+
+## Usage: Preprocessing Corpora
+
+Before we run topic modeling for the first time, we need to preprocess the input corpus, by running the script *prep_text.py*. When running the tool specify one or more directories containing documents to preprocess. There are 
+two possible input formats for files:
+
+1. Each text file represents a single document.
+2. Every line of each text file represents a different document. 
+
+Example where every line each file represents a different document:
+
+``` python topicscan/prep_text.py -s topicscan/text/stopwords/english.txt --tfidf --norm -o bbc data/bbc/*```
+
+Example where every line of each text file represents a different document:
+
+``` python topicscan/prep_text.py -s topicscan/text/stopwords/english.txt --tfidf --norm -o bbc --lines data/bbc.txt```
