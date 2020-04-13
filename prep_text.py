@@ -27,6 +27,7 @@ def main():
 	parser.add_option("-s", action="store", type="string", dest="stoplist_file", help="custom stopword file path", default=None)
 	parser.add_option("-o", action="store", type="string", dest="prefix", help="output prefix for corpus files", default=None)
 	parser.add_option("--debug", action="store_true", dest="debug", help="enable debugging information", default=False)
+	# parse command line arguments
 	(options, args) = parser.parse_args()
 	if len(args) < 1:
 		parser.error("Must specify at least one directory containing documents to preprocess")	
@@ -69,7 +70,7 @@ def main():
 		log.debug("Reading text from %s ..." % in_path)
 		# is each line a separate document?
 		if options.is_lines:
-			for i, body in enumerate( text.util.read_text_lines(in_path) ):
+			for i, body in enumerate(text.util.read_text_lines(in_path)):
 				if len(body) < options.min_doc_length:
 					num_short_documents += 1
 					continue
@@ -88,7 +89,8 @@ def main():
 			document_ids.append(doc_id)	
 			labels[label].add(doc_id)
 			label_counts[label] += 1
-	log.info("Kept %d documents. Skipped %d documents with length < %d" % (len(documents), num_short_documents, options.min_doc_length))
+	log.info("Kept %d documents. Skipped %d documents with length < %d" % 
+		(len(documents), num_short_documents, options.min_doc_length))
 	# any document labels?
 	if len(labels) >= 2:
 		log.info("Document categories: %d labels - %s" % (len(labels), label_counts))
@@ -100,8 +102,10 @@ def main():
 		stopwords = text.util.load_word_set(options.stoplist_file)
 
 	# Convert the documents to a vector representation
-	log.info("Pre-processing data (%d stopwords, tfidf=%s, normalize=%s, min_df=%d) ..." % (len(stopwords), options.apply_tfidf, options.apply_norm, options.min_df))
-	(X,terms) = text.util.preprocess(documents, stopwords, min_df = options.min_df, apply_tfidf = options.apply_tfidf, apply_norm = options.apply_norm)
+	log.info("Pre-processing data (%d stopwords, tfidf=%s, normalize=%s, min_df=%d) ..." % 
+		(len(stopwords), options.apply_tfidf, options.apply_norm, options.min_df))
+	(X,terms) = text.util.preprocess(documents, stopwords, min_df = options.min_df, 
+		apply_tfidf = options.apply_tfidf, apply_norm = options.apply_norm)
 	log.info("Built document-term matrix: %d documents, %d terms" % (X.shape[0], X.shape[1]))
 	
 	# Save the preprocessed corpus
