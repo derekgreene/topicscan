@@ -33,14 +33,14 @@ To validate and visualize your topic models, you will also need one or more pre-
 Before we run topic modeling for the first time, we need to preprocess the input corpus, by running the script *prep_text.py*. When running the tool specify one or more directories containing documents to preprocess. There are 
 two possible input formats for files:
 
-1. Each text file represents a single document.
-2. Every line of each text file represents a different document. 
+1. Each text file correspond to a single document.
+2. Every line of each text file represents a separate document. 
 
-Example where every line in each file represents a different document:
+Example where every line in each file represents a separate document:
 
 ``` python topicscan/prep_text.py -s topicscan/text/stopwords/english.txt --tfidf --norm -o bbc data/bbc/*```
 
-Example where every line of each text file represents a different document:
+Example where every line of each text file represents a separate document:
 
 ``` python topicscan/prep_text.py -s topicscan/text/stopwords/english.txt --tfidf --norm -o bbc --lines data/bbc.txt```
 
@@ -49,11 +49,11 @@ Example where every line of each text file represents a different document:
 
 A *word2vec* word embedding model can be created from a background corpus using the *prep-word2vec.py* script. As above, the inputs can either be documents as separate text files, or files with one document per line. The word embedding variant can either be Skipgram (sg) or Continuous Bag of Words (cbow).
 
-Example of generating a word2vec Skipgram (sg) model, where every line in each input file represents a different document:
+Example of generating a word2vec Skipgram (sg) model, where every line in each input file represents a separate document:
 
 ``` python topicscan/prep_word2vec.py -m sg -s topicscan/text/stopwords/english.txt -o bbc-w2v-sg.bin data/bbc/*```
 
-Example of generating a word2vec Continuous Bag of Words (cbow) model, where every line of each input text file represents a different document:
+Example of generating a word2vec Continuous Bag of Words (cbow) model, where every line of each input text file represents a separate document:
 
 ``` python topicscan/prep_word2vec.py -m cbow -s topicscan/text/stopwords/english.txt -o bbc-w2v-cbow.bin --lines data/bbc.txt```
 
