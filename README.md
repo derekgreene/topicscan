@@ -49,11 +49,11 @@ Example where every line of each text file represents a different document:
 
 A *word2vec* word embedding model can be created from a background corpus using the *prep-word2vec.py* script. As above, the inputs can either be documents as separate text files, or files with one document per line. The word embedding variant can either be Skipgram (sg) or Continuous Bag of Words (cbow).
 
-Example creating a word2vec Skipgram model, where every line in each input file represents a different document:
+Example of generating a word2vec Skipgram (sg) model, where every line in each input file represents a different document:
 
 ``` python topicscan/prep_word2vec.py -m sg -s topicscan/text/stopwords/english.txt -o bbc-w2v-sg.bin data/bbc/*```
 
-Example creating a word2vec Continuous Bag of Words model, where every line of each input text file represents a different document:
+Example of generating a word2vec Continuous Bag of Words (cbow) model, where every line of each input text file represents a different document:
 
 ``` python topicscan/prep_word2vec.py -m cbow -s topicscan/text/stopwords/english.txt -o bbc-w2v-cbow.bin --lines data/bbc.txt```
 
