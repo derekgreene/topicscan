@@ -3,7 +3,7 @@
 Script implementing the main TopicScan interface.
 
 Sample usage:
-``` python topicscan/scan.py ./data/models ```
+``` python topicscan/scan.py ~/sample ```
 """
 import sys
 from urllib.parse import urlparse, parse_qs
