@@ -5,8 +5,8 @@ TopicScan contains tools for preparing text corpora, generating topic models wit
 
 For more details on TopicScan, please see the paper:
 
-  TopicScan: A Visual Validation Tool for NMF Topic Models
-  Derek Greene, Mark Belford. Under Review, 2020.
+	TopicScan: A Visual Validation Tool for NMF Topic Models
+	Derek Greene, Mark Belford. Under Review, 2020.
 
 The web interface for TopicScan was created using the Python [Dash platform](https://plotly.com/dash) and [Bootstrap](https://getbootstrap.com), with the [ElaAdmin theme](https://github.com/puikinsh/ElaAdmin). It is designed to be run locally as a personal web application, rather than online as a multi-user web application.
 
