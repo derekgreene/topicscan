@@ -77,12 +77,12 @@ We can also specify an alternative working directory to search:
 
 The different pages of TopicScan interface can also be run individually. In each case, we need to specify the path to the relevant metadata file(s):
 
-```python topicscan/scan_topics.py ~/sample/models/bbc/nmf_k05/bbc_k05_001.meta```
+```python topicscan/scan_topics.py models/bbc/nmf_k05/bbc_k05_001.meta```
 
-```python topicscan/scan_validation.py ~/sample/models/bbc/nmf_k05/bbc_k05_001.meta```
+```python topicscan/scan_validation.py models/bbc/nmf_k05/bbc_k05_001.meta```
 
-```python topicscan/scan_silhouette.py ~/sample/models/bbc/nmf_k05/bbc_k05_001.meta```
+```python topicscan/scan_silhouette.py models/bbc/nmf_k05/bbc_k05_001.meta```
 
-```python topicscan/scan_scatter.py  ~/sample/models/bbc/nmf_k05/bbc_k05_001.meta```
+```python topicscan/scan_scatter.py  models/bbc/nmf_k05/bbc_k05_001.meta```
 
-```python topicscan/scan_heatmap.py  ~/sample/models/bbc/nmf_k05/bbc_k05_001.meta```
+```python topicscan/scan_heatmap.py  models/bbc/nmf_k05/bbc_k05_001.meta```
