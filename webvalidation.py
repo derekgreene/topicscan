@@ -1,6 +1,6 @@
 import numpy as np
 import pandas as pd
-from validation.embedding import CoherenceScore, TopicDifferenceScore, MinMaxScore, InternalExternalScore, TopicSilhouetteScore
+from model.validation import CoherenceScore, TopicDifferenceScore, MinMaxScore, InternalExternalScore, TopicSilhouetteScore
 from webconfig import config
 
 # --------------------------------------------------------------

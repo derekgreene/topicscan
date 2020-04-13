@@ -4,8 +4,8 @@ from pathlib import Path
 import logging as log
 import numpy as np
 import pandas as pd
-from unsupervised.util import load_nmf_factors, load_partition, load_term_rankings, truncate_term_rankings
-from validation.embedding import Embedding
+from model.util import load_nmf_factors, load_partition, load_term_rankings, truncate_term_rankings
+from model.embedding import Embedding
 from webconfig import config
 
 # --------------------------------------------------------------
