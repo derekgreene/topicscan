@@ -36,13 +36,26 @@ two possible input formats for files:
 1. Each text file represents a single document.
 2. Every line of each text file represents a different document. 
 
-Example where every line each file represents a different document:
+Example where every line in each file represents a different document:
 
 ``` python topicscan/prep_text.py -s topicscan/text/stopwords/english.txt --tfidf --norm -o bbc data/bbc/*```
 
 Example where every line of each text file represents a different document:
 
 ``` python topicscan/prep_text.py -s topicscan/text/stopwords/english.txt --tfidf --norm -o bbc --lines data/bbc.txt```
+
+
+## Usage: Generating Word Embeddings
+
+A *word2vec* word embedding model can be created from a background corpus using the *prep-word2vec.py* script. As above, the inputs can either be documents as separate text files, or files with one document per line. The word embedding variant can either be Skipgram (sg) or Continuous Bag of Words (cbow).
+
+Example creating a word2vec Skipgram model, where every line in each input file represents a different document:
+
+``` python topicscan/prep_word2vec.py -m sg -s topicscan/text/stopwords/english.txt -o bbc-w2v-sg.bin data/bbc/*```
+
+Example creating a word2vec Continuous Bag of Words model, where every line of each input text file represents a different document:
+
+``` python topicscan/prep_word2vec.py -m cbow -s topicscan/text/stopwords/english.txt -o bbc-w2v-cbow.bin --lines data/bbc.txt```
 
 
 ## Usage: Generating Topic Models
@@ -71,6 +84,7 @@ Each run of NMF produces four output files. For instance, for the first run abov
 2. *models/bbc/nmf_k05/bbc_1000_001_ranks.pkl*: Full set of ranked terms for each topic in the model.
 3. *models/bbc/nmf_k05/bbc_1000_001_partition.pkl*: Disjoint partition of the documents in the model.
 4. *models/bbc/nmf_k05/bbc_1000_001_factors.pkl*: The complete factor matrices produced by NMF for the model.
+
 
 ## Usage: TopicScan Web Interface
 

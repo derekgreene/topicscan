@@ -7,6 +7,7 @@ import joblib
 
 token_pattern = re.compile(r"\b\w\w+\b", re.U)
 url_pattern = re.compile('https?[:;]?/?/?\S*')
+min_term_length = 2
 
 # --------------------------------------------------------------
 
@@ -54,18 +55,19 @@ def load_word_set( in_path ):
 				stopwords.add(l)
 	return stopwords
 
-def preprocess( docs, stopwords, min_df = 3, min_term_length = 2, ngram_range = (1,1), apply_tfidf = True, apply_norm = True ):
-	"""
-	Preprocess a list containing text documents stored as strings.
-	"""	
-	def custom_tokenizer( s ):
-		return [x.lower() for x in token_pattern.findall(s) if (len(x) >= min_term_length and x[0].isalpha() ) ]
+# --------------------------------------------------------------
 
-	# Build the Vector Space Model, apply TF-IDF and normalize lines to unit length all in one call
+def custom_tokenizer( s ):
+	""" Custom string tokenizer. """
+	return [x.lower() for x in token_pattern.findall(s) if (len(x) >= min_term_length and x[0].isalpha() ) ]
+
+def preprocess( docs, stopwords, min_df = 3, ngram_range = (1,1), apply_tfidf = True, apply_norm = True ):
+	""" Preprocess a list containing text documents stored as strings. """	
 	if apply_norm:
 		norm_function = "l2"
 	else:
 		norm_function = None
+	# build the Vector Space Model, apply TF-IDF and normalize lines to unit length all in one call
 	tfidf = TfidfVectorizer(stop_words=stopwords, lowercase=True, strip_accents="unicode", 
 		tokenizer=custom_tokenizer, use_idf=apply_tfidf, norm=norm_function, min_df = min_df, ngram_range = ngram_range) 
 	X = tfidf.fit_transform(docs)
@@ -80,13 +82,59 @@ def preprocess( docs, stopwords, min_df = 3, min_term_length = 2, ngram_range = 
 
 # --------------------------------------------------------------
 
-def save_corpus( out_prefix, X, terms, doc_ids, document_labels = None ):
+def save_corpus(out_prefix, X, terms, doc_ids, document_labels = None):
 	""" Save a pre-processed scikit-learn corpus and associated metadata using Joblib. """
 	matrix_outpath = "%s.pkl" % out_prefix 
 	log.info( "Saving document-term matrix to %s" % matrix_outpath )
 	joblib.dump((X,terms,doc_ids,document_labels), matrix_outpath ) 
 
-def load_corpus( in_path ):
+def load_corpus(in_path):
 	""" Load a pre-processed scikit-learn corpus and associated metadata using Joblib. """
 	(X,terms,doc_ids,document_labels) = joblib.load( in_path )
 	return (X, terms, doc_ids, document_labels)
+
+# --------------------------------------------------------------
+
+class FileTokenGenerator:
+	""" A generator which yields tokens from a collection of text files,
+	where each file represents a separate document. """
+
+	def __init__(self, file_paths, min_doc_length, stopwords = set()):
+		self.file_paths = file_paths
+		self.min_doc_length = min_doc_length
+		self.stopwords = stopwords
+		self.placeholder = "<stopword>"
+
+	def __iter__( self ):
+		for in_path in self.file_paths:
+			doc = read_text( in_path ).lower()
+			if len(doc) < self.min_doc_length:
+				continue
+			tokens = []
+			for tok in custom_tokenizer(doc):
+				if tok in self.stopwords:
+					tokens.append(self.placeholder)
+				else:
+					tokens.append(tok)
+			yield tokens
+
+class LineTokenGenerator(FileTokenGenerator):
+	""" A generator which yields tokens from a collection of text files,
+	where each line in a file represents a separate document. """
+
+	def __init__(self, file_paths, min_doc_length, stopwords = set()):
+		super(LineTokenGenerator, self).__init__(file_paths, min_doc_length, stopwords)
+
+	def __iter__( self ):
+		for in_path in self.file_paths:
+			text = read_text( in_path ).lower()
+			for doc in text.split("\n"):
+				if len(doc) < self.min_doc_length:
+					continue
+				tokens = []
+				for tok in custom_tokenizer(doc):
+					if tok in self.stopwords:
+						tokens.append(self.placeholder)
+					else:
+						tokens.append(tok)
+				yield tokens
