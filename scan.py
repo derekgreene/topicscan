@@ -48,8 +48,8 @@ def parse_page_url(href):
 
 def main():
 	parser = OptionParser(usage="usage: %prog [options] working_directory")
-	parser.add_option("--debug", action="store_true", dest="debug", help="enable debugging information", default=True)
 	parser.add_option("--preload", action="store_true", dest="preload", help="preload all word embeddings", default=False)
+	parser.add_option("--debug", action="store_true", dest="debug", help="enable debugging information", default=True)
 	(options, args) = parser.parse_args()
 	# control level of log output
 	log_level = log.DEBUG if options.debug else log.INFO
