@@ -62,15 +62,15 @@ Example of generating a word2vec Continuous Bag of Words (cbow) model, where eve
 
 Once we have a preprocessed corpus prepared, we can generate topic models via the NMF algorithm.
 
-To generate a single topic model with randomly-initialized NMF, containing *k=5* topics, we can run:
+To generate a single topic model with randomly-initialized NMF, containing *k=5* topics, we can execute:
 
 ``` python topicscan/topic_nmf.py bbc.pkl --init random --kmin 5 --kmax 5 -r 1 --maxiters 100 -o models/bbc```
 
-To execute 10 runs of randomly-initialized NMF, each containing *k=5* topics, we can run:
+To execute 10 runs of randomly-initialized NMF, each containing *k=5* topics, we can execute:
 
 ``` python topicscan/topic_nmf.py bbc.pkl --init random --kmin 5 --kmax 5 -r 10 --maxiters 100 -o models/bbc```
 
-To execute 10 runs of randomly-initialized NMF, for each value of *k* from 5 to 8, run:
+To execute 10 runs of randomly-initialized NMF, for each value of *k* from 5 to 8, we execute:
 
 ``` python topicscan/topic_nmf.py bbc.pkl --init random --kmin 5 --kmax 8 -r 10 --maxiters 100 -o models/bbc```
 
