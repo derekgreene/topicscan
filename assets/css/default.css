@@ -1,0 +1,238 @@
+body
+{
+  height: 100%;
+  font-family: "Open Sans", "Helvetica Neue", sans-serif;
+}
+
+.root
+{
+  padding: 0;
+  margin: 0;
+}
+
+.content
+{
+  background: #f1f2f7;
+  padding: 1.25em;
+  margin: 0;
+}
+
+.header
+{
+  padding-left: 1em;
+  padding-top: 0.3em;
+  padding-bottom: 0.3em;
+  padding-right: 0em;
+  margin-right: 0em;
+  border-bottom: 1px solid #aaa;
+}
+
+.headerlogo
+{
+  height: auto;
+  width: auto;
+  max-height: 35px;
+}
+
+.headersubtext
+{
+  font-family: "Open Sans", "Helvetica Neue", sans-serif;
+  font-size: 105%;
+  color: #878787;
+}
+
+/** Navigation */
+
+.subnav
+{
+  background-color: #f7f9fa;
+  width: 100%;
+  padding-top: 0.1em;
+  padding-bottom: 0.2em;
+  border-bottom: 1px solid #aaa;
+  margin-bottom: 0em;
+}
+
+.navbar-wrapper .navbar 
+{
+  width: 100% !important;
+}
+
+.nav-link
+{
+  color: #007bff !important;
+  font-size: 105% !important;
+  white-space: nowrap !important;
+}
+
+/** Forms */
+
+.input-group-text
+{
+  font-size: 95%;
+}
+
+.custom-select
+{
+  font-size: 95%;
+}
+
+.custom-text
+{
+  font-size: 95%;
+}
+
+/** Cards */
+
+.card-header
+{
+  font-weight: bold;
+  font-family: "Open Sans", "Helvetica Neue", sans-serif;
+}
+
+/** DF Tables */
+
+.dftable
+{
+  margin-top: 0.3em;
+  margin-bottom: 0.5em;
+  border-bottom : 1.5px solid #d2d3d2;
+}
+
+.dftable-header
+{
+  font-family: "Open Sans", "Helvetica Neue", sans-serif;
+  font-size: 95%;
+  vertical-align: middle;
+}
+
+.dftable-header-name
+{
+  font-weight: bold;
+  vertical-align: middle;
+}
+
+.dftable-row
+{
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+.dftable-summaryrow
+{
+  margin-top: 0;
+  margin-bottom: 0;
+  background-color: #e9ecef;
+}
+
+.dftable-cell
+{
+  font-family: "Open Sans", "Helvetica Neue", sans-serif;
+  font-size: 95%;
+  /*line-height: 2.3;*/
+  padding-top: 6px;
+  padding-bottom: 6px;
+  vertical-align: middle;
+}
+
+/** General Charts **/
+
+.modebar 
+{
+  display: none !important;
+}
+
+/** Topic Model Page **/
+
+#chart_term_assoc
+{
+  width: 98%;
+  margin: auto;
+  padding-top: 0.8em;
+}
+
+#chart_document_assoc
+{
+  width: 98%;
+  margin: auto;
+  padding-top: 0.8em;
+}
+
+/** Scatter Page */
+
+#chart_topicscatter
+{
+  width: 95%;
+  margin: auto;
+  padding-top: 1em;
+}
+
+#chart_termscatter
+{
+  width: 95%;
+  margin: auto;
+  padding-top: 1em;
+}
+
+/** Heatmap Page */
+
+#chart_topicheatmap
+{
+  width: 95%;
+  margin: auto;
+  padding-top: 1em;
+}
+
+/** Embedding Page */
+
+#neighbor-table
+{
+  margin-top: 2em;
+}
+
+/** Validation Page */
+
+#content_validation_table
+{
+  padding-bottom: 1.3em;
+}
+
+#validation_summary
+{
+  width: 40%;
+}
+
+#title_vtext2
+{
+   padding-top: 0.9em;
+}
+
+.dash-table-container
+{
+  margin-left: 1.1em;
+  margin-right: 1.1em;
+  margin-top: 1.3em;
+  margin-bottom: 0.5em;
+}
+
+.dash-header
+{
+  font-family: "Open Sans", "Helvetica Neue", sans-serif;
+  font-size: 95%;
+  vertical-align: middle;
+}
+
+.column-header-name
+{
+  font-weight: bold;
+  line-height: 2.3;
+  vertical-align: middle;
+}
+
+.dash-cell
+{
+  font-family: "Open Sans", "Helvetica Neue", sans-serif;
+  font-size: 95%;
+  line-height: 2.3;
+  vertical-align: middle;
+}
