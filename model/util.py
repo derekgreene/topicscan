@@ -1,5 +1,4 @@
 import random
-import logging as log
 import numpy as np
 import joblib
 
@@ -13,7 +12,6 @@ def init_random_seeds(random_seed):
 		random_seed = random.randint(1,100000)
 	np.random.seed(random_seed)
 	random.seed(random_seed)			
-	log.info("Using random seed %s" % random_seed)
 	return random_seed
 	
 # --------------------------------------------------------------
@@ -73,6 +71,7 @@ def truncate_term_rankings(orig_rankings, top, vocab = None):
 	on the specified vocabulary.
 	"""
 	trunc_rankings = []
+	# no limited vocabulary?
 	if vocab is None:
 		if top < 1:
 			return orig_rankings
@@ -95,9 +94,7 @@ def truncate_term_rankings(orig_rankings, top, vocab = None):
 	return trunc_rankings
 
 def clustermap_to_partition(cluster_map, doc_ids):
-	"""
-	Convert a dictionary, representing a clustering of documents, into a partition.
-	"""
+	""" Convert a dictionary, representing a clustering of documents, into a partition. """
 	cluster_names = list(cluster_map.keys())
 	cluster_names.sort()
 	# build document map
@@ -106,7 +103,7 @@ def clustermap_to_partition(cluster_map, doc_ids):
 	for i in range(len(doc_ids)):
 		partition.append(-1)
 		doc_map[ doc_ids[i] ] = i
-	# now create partition
+	# now create the document partition
 	for cluster_index in range(len(cluster_map)):
 		for doc_id in cluster_map[cluster_names[cluster_index]]:
 			partition[doc_map[doc_id]] = cluster_index
