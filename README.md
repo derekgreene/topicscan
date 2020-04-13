@@ -65,6 +65,13 @@ Instead of using randomly-initialized NMF, we can use NNDSVD-based initializatio
 
 ``` python topicscan/topic_nmf.py bbc.pkl --init nndsvd --kmin 5 --kmax 5 -r 1 --maxiters 100 -o models/bbc```
 
+Each run of NMF produces four output files. For instance, for the first run above the script produces one JSON file (#1) and three binary files (#2-4):
+
+1. *models/bbc/nmf_k05/bbc_1000_001.meta*: Metadata for topic model, as used by the TopicScan web interface.
+2. *models/bbc/nmf_k05/bbc_1000_001_ranks.pkl*: Full set of ranked terms for each topic in the model.
+3. *models/bbc/nmf_k05/bbc_1000_001_partition.pkl*: Disjoint partition of the documents in the model.
+4. *models/bbc/nmf_k05/bbc_1000_001_factors.pkl*: The complete factor matrices produced by NMF for the model.
+
 ## Usage: TopicScan Web Interface
 
 To start the TopicScan interface, run the script *scan.py*. By default this will search the current directory and its subdirectories for topic model and word embedding metadata files:
