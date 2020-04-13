@@ -43,17 +43,19 @@ def main():
 		if not os.path.exists(in_path):
 			log.error("Error: No such input path %s" % in_path)
 			sys.exit(1)
-		# is this a directory?
+		# is this a directory? if so, then walk the directory
 		if os.path.isdir(in_path):
 			log.info("Searching %s for text files ..." % in_path)
 			for fpath in text.util.find_text_files(in_path):
 				file_paths.append(fpath)
 		else:
 			file_paths.append(in_path)
-	log.info("Found %d text files to parse" % len(file_paths))
+	if len(file_paths) == 0:
+		log.error("Error: Found no text files to preprocess")
+		sys.exit(1)
+	log.info("Found %d text files to preprocess" % len(file_paths))
 
-	# Read the documents
-	log.info("Reading documents ...")
+	# Read the files
 	documents, document_ids = [], []
 	num_short_documents = 0
 	label_counts, labels = {}, {}

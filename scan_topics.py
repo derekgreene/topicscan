@@ -21,8 +21,8 @@ from layouts.topics import TopicModelLayout
 
 def main():
 	parser = OptionParser(usage="usage: %prog [options] meta_file_path")
-	parser.add_option("--debug", action="store_true", dest="debug", help="enable debugging information", default=True)
 	parser.add_option("--preload", action="store_true", dest="preload", help="preload all word embeddings", default=False)
+	parser.add_option("--debug", action="store_true", dest="debug", help="enable debugging information", default=True)
 	(options, args) = parser.parse_args()
 	if len(args) != 1 :
 		parser.error("Must specify topic model metadata file path")
