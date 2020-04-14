@@ -87,6 +87,11 @@ def main():
 		[Input('url', 'href')])
 	def display_page(href):
 		""" Display the appropriate layout, based on the current URL. """
+		# handle empty requests
+		if href is None:
+			log.info("Callback display_page: Ignoring empty callback")
+			return ""
+		log.info("Callback display_page: href=%s" % href)
 		pathname, query, param_id, param_uid = parse_page_url(href)
 		layout_name = pathname.strip().lower()
 		if layout_name[0] == "/":
