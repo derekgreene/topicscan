@@ -65,22 +65,22 @@ class TopicModelLayout( GeneralLayout ):
 		return html.Div([
 			dbc.Row( [
 					html.Div([
-						dcc.Link(id="atopic"),
+						dcc.Link(id="atopic", href=""),
 						dbc.Col( self.generate_topic_card() ) ],
 						className='col-lg-12'
 					), 
 					html.Div([
-						dcc.Link(id="apartition"),
+						dcc.Link(id="apartition", href=""),
 						dbc.Col( self.generate_partition_card() ) ],
 						className='col-lg-12'
 					), 
 					html.Div([
-						dcc.Link(id="atermassoc"),
+						dcc.Link(id="atermassoc", href=""),
 						dbc.Col( self.generate_term_association_card() ) ],
 						className='col-lg-12'
 					), 
 					html.Div([
-						dcc.Link(id="adocumentassoc"),
+						dcc.Link(id="adocumentassoc", href=""),
 						dbc.Col( self.generate_document_association_card() ) ],
 						className='col-lg-12'
 					), 

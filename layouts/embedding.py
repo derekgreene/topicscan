@@ -29,12 +29,12 @@ class EmbeddingLayout( GeneralLayout ):
 		return html.Div([
 			dbc.Row( [
 					html.Div([
-						dcc.Link(id="aneighbor"),
+						dcc.Link(id="aneighbor", href=""),
 						dbc.Col( self.generate_neighbor_card() ) ],
 						className='col-lg-12'
 					), 
 					html.Div([
-						dcc.Link(id="aheatmap"),
+						dcc.Link(id="aheatmap", href=""),
 						dbc.Col( self.generate_heatmap_card() ) ],
 						className='col-lg-12'
 					), 

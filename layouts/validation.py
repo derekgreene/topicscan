@@ -61,21 +61,21 @@ class ValidationLayout( GeneralLayout ):
 				) ),
 			dbc.Row( [
 					html.Div([
-						dcc.Link(id="avtable"),
+						dcc.Link(id="avtable", href=""),
 						dbc.Col( self.generate_vtable_card() ) ],
 						className='col-lg-12'
 					), 
 				] ),
 			dbc.Row( [
 					html.Div([
-						dcc.Link(id="avchart"),
+						dcc.Link(id="avchart", href=""),
 						dbc.Col( self.generate_vchart_card() ) ],
 						className='col-lg-12'
 					), 
 				] ),
 			dbc.Row( [
 					html.Div([
-						dcc.Link(id="avdistribution"),
+						dcc.Link(id="avdistribution", href=""),
 						dbc.Col( self.generate_vdistribution_card() ) ],
 						className='col-lg-12'
 					), 
