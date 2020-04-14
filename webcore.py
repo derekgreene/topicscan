@@ -124,7 +124,6 @@ class WebCore:
 				"Description" : self.embedding_meta[embed_id]["description"],
 				"Algorithm" : self.embedding_meta[embed_id]["algorithm"]["id"], 
 				"Dimensions" : self.embedding_meta[embed_id]["dimensions"], 
-				"Documents" : self.embedding_meta[embed_id]["documents"],
 				"Terms" : self.embedding_meta[embed_id]["terms"] }
 			rows.append(row)
 		self.df_embeddings = pd.DataFrame(rows)
