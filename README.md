@@ -1,7 +1,14 @@
 # TopicScan
 
 *TopicScan* is an interactive web-based dashboard for exploring and evaluating topic models created using Non-negative Matrix Factorization (NMF).
-TopicScan contains tools for preparing text corpora, generating topic models with NMF, and validating these models using a variety of measures based on [word embeddings](https://en.wikipedia.org/wiki/Word_embedding).
+TopicScan contains tools for preparing text corpora, generating topic models with NMF, and validating these models. 
+
+TopicScan interface features include:
+
+- Inspection of topic descriptors, term-topic associations,  document-topic associations, and document partitions.
+- Validation of individual topics and overall models based on topic distinctivensss using a range of new measures based on word embeddings.
+- Comparisons across multiple topic models using these measures.
+- Visualisation of topics and models via term similarity heatmaps, term silhouette plots, and multidimensional scaling  scatter plots.
 
 For more details on TopicScan, please see the paper:
 
