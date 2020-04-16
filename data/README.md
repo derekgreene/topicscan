@@ -1,8 +1,8 @@
 # TopicScan - Sample Data
 
-Three sample corpora are provided for use with *TopicScan*:
-
 ### Text Corpora
+
+Three sample corpora are provided for use with *TopicScan*:
 
 | Corpus        | Documents | Terms | Description                                                                                             | Download   |
 |---------------|-----------|-------|---------------------------------------------------------------------------------------------------------|------------|
