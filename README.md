@@ -6,11 +6,11 @@ TopicScan contains tools for preparing text corpora, generating topic models wit
 TopicScan interface features include:
 
 - Inspection of topic descriptors, term-topic associations,  document-topic associations, and document partitions.
-- Validation of individual topics and overall models based on topic distinctivensss using a range of new measures based on word embeddings.
+- Validation of individual topics and overall models based on topic distinctiveness using a range of new measures based on word embeddings.
 - Comparisons across multiple topic models using these measures.
-- Visualisation of topics and models via term similarity heatmaps, term silhouette plots, and multidimensional scaling  scatter plots.
+- Visualization of topics and models via term similarity heatmaps, term silhouette plots, and multidimensional scaling  scatter plots.
 
-For more details on TopicScan, please see the paper:
+For more details on TopicScan, see the paper:
 
 	TopicScan: A Visual Validation Tool for NMF Topic Models
 	Derek Greene, Mark Belford. Under Review, 2020.
