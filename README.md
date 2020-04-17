@@ -114,3 +114,11 @@ The different pages of TopicScan interface can also be run individually. In each
 ```python topicscan/scan_scatter.py  models/bbc/nmf_k05/bbc_k05_001.meta```
 
 ```python topicscan/scan_heatmap.py  models/bbc/nmf_k05/bbc_k05_001.meta```
+
+## Usage: Generating Word Embeddings
+
+A number of pre-trained word embeddings are available online [here](data/) for validating models. 
+
+Custom embeddings can also be trained using *prep_word2vec.py*. For instance, to create a *word2vec* Skipgram embedding with 100 dimensions:
+
+```python topicscan/prep_word2vec.py -m sg -d 100 data/corpora/bbc.txt --lines -o bbc-w2v-sg-d100.bin -s topicscan/text/stopwords/english.txt```
