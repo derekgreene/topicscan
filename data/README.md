@@ -31,7 +31,7 @@ A number of pretrained word embeddings for use with *TopicScan* are listd below.
 References in relation to the corpora and embeddings above:
 
 - M. Belford and D. Greene, Explainable Ensemble Topic Models using Weighted Term Co-associations Mark Belford. Under review, 2020.
-- M. Qureshi and D. Greene, Lit@EVE: Explainable Recommendation based on Wikipedia Concept Vectors, in Proc. European Conference on Machine Learning (ECML’17), 2017. [[PDF]](http://derekgreene.com/papers/qureshi17ecml.pdf)
+- M. Qureshi and D. Greene, EVE: Explainable vector based embedding technique using Wikipedia, Journal of Intelligent Information Systems, 2018. [[PDF]](http://derekgreene.com/papers/qureshi18eve.pdf)
 - Hermann, K. M., Kocisky, T., Grefenstette, E., Espeholt, L., Kay, W., Suleyman, M., and Blunsom, P. Teaching Machines to Read and Comprehend. In Proc. Neural Information Processing Systems, 2015.
 - D. Greene and P. Cunningham, Practical Solutions to the Problem of Diagonal Dominance in Kernel Document Clustering, in Proc. 23rd International Conference on Machine learning (ICML’06), 2006. [[PDF]](http://derekgreene.com/papers/greene06icml.pdf)
 
