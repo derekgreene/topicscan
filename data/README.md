@@ -14,15 +14,15 @@ Three sample corpora are provided for use with *TopicScan*:
 
 A number of pretrained word embeddings for use with *TopicScan* are listd below. Note these are hosted elsewhere and can be downloaded and placed in your local working directory. 
 
-| Embedding                   | Algorithm     | Corpus Description                                                                            | Terms   | Download    |
+| Embedding                   | Algorithm     | Description                                                                            | Terms   | Download    |
 |-----------------------------|---------------|----------------------------------------------------------------------------------------|---------|-------------|
-| *cnndailymail-w2v-cbow-d100*  | word2vec cbow | Collection of 312k CNN and Daily Mail news articles, compiled by Hermann et al in 2015 | 243863  | ZIP (95MB)  |
-| *cnndailymail-w2v-sg-d100*    | word2vec sg   | Collection of 312k CNN and Daily Mail news articles, compiled by Hermann et al in 2015 | 243863  | ZIP (95MB)  |
-| *guardian15-w2v-cbow-d100*    | word2vec cbow | Corpus of over 1.5m articles from 15 years of Guardian online news                     | 557937  | ZIP (218MB) |
-| *guardian15-w2v-sg-d100*      | word2vec sg   | Corpus of over 1.5m articles from 15 years of Guardian online news                     | 557937  | ZIP (218MB) |
-| *wapo-w2v-cbow-d100*          | word2vec cbow | A corpus of 595k Washington Post news articles from the TREC Conference                | 298515  | ZIP (117MB) |
-| *wapo-w2v-sg-d100*            | word2vec sg   | A corpus of 595k Washington Post news articles from the TREC Conference                | 298515  | ZIP (117MB) |
-| *wikipedia2016-w2v-cbow-d100* | word2vec cbow | Collection of 4.9m Wikipedia long abstracts from 2016                                  | 1333306 | ZIP (521MB) |
-| *wikipedia2016-w2v-sg-d100*   | word2vec sg   | Collection of 4.9m Wikipedia long abstracts from 2016                                  | 1333306 | ZIP (521MB) |
+| *cnndailymail-w2v-cbow-d100*  | word2vec cbow | Collection of 312k CNN and Daily Mail news articles, compiled by Hermann et al in 2015. | 243863  | ZIP (95MB)  |
+| *cnndailymail-w2v-sg-d100*    | word2vec sg   | Collection of 312k CNN and Daily Mail news articles, compiled by Hermann et al in 2015. | 243863  | ZIP (95MB)  |
+| *guardian15-w2v-cbow-d100*    | word2vec cbow | Corpus of over 1.5m articles from 15 years of Guardian online news.                     | 557937  | ZIP (218MB) |
+| *guardian15-w2v-sg-d100*      | word2vec sg   | Corpus of over 1.5m articles from 15 years of Guardian online news.                     | 557937  | ZIP (218MB) |
+| *wapo-w2v-cbow-d100*          | word2vec cbow | A corpus of 595k Washington Post news articles from the TREC Conference.                | 298515  | ZIP (117MB) |
+| *wapo-w2v-sg-d100*            | word2vec sg   | A corpus of 595k Washington Post news articles from the TREC Conference.                | 298515  | ZIP (117MB) |
+| *wikipedia2016-w2v-cbow-d100* | word2vec cbow | Collection of 4.9m Wikipedia long abstracts, compiled by Qureshi & Greene in 2016.                                  | 1333306 | ZIP (521MB) |
+| *wikipedia2016-w2v-sg-d100*   | word2vec sg   | Collection of 4.9m Wikipedia long abstracts, compiled by Qureshi & Greene in 2016.                                 | 1333306 | ZIP (521MB) |
 
 
