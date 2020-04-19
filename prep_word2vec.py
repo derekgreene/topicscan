@@ -27,8 +27,8 @@ def main():
 	parser = OptionParser(usage="usage: %prog [options] directory1 directory2 ...")
 	parser.add_option("--seed", action="store", type="int", dest="seed", help="random seed", default=1000)
 	parser.add_option("-l","--lines", action="store_true", dest="is_lines", help="each line in a file represents a separate document")
-	parser.add_option("--df", action="store", type="int", dest="min_df", help="minimum number of documents for a term to appear", default=10)
-	parser.add_option("-d","--dimensions", action="store", type="int", dest="dimensions", help="the dimensionality of the word vectors", default=500)
+	parser.add_option("--df", action="store", type="int", dest="min_df", help="minimum number of documents for a term to appear", default=20)
+	parser.add_option("-d","--dimensions", action="store", type="int", dest="dimensions", help="the dimensionality of the word vectors", default=100)
 	parser.add_option("--window", action="store", type="int", dest="window_size", 
 		help="the maximum distance for Word2Vec to use between the current and predicted word within a sentence", default=5)
 	parser.add_option("-m", action="store", type="string", dest="embed_type", help="type of word embedding to build (sg or cbow)", default="sg")
