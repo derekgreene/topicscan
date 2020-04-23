@@ -10,6 +10,19 @@ from webconfig import config
 
 # --------------------------------------------------------------
 
+def filepath_to_metadata_id(meta_file_path, dir_core):
+	""" Utility function that converts a full file path to an identifier
+	relative to the specified core directory, with the extension dropped too. """
+	meta_file_path = Path(meta_file_path)
+	try:
+		relative = meta_file_path.relative_to(dir_core)
+		return str(relative.with_suffix(""))
+	except ValueError as e:
+		# not a relative path?
+		return str(meta_file_path.with_suffix(""))
+
+# --------------------------------------------------------------
+
 class WebCore:
 
 	def __init__(self, dir_core):
@@ -90,8 +103,7 @@ class WebCore:
 					if type(data) != dict:
 						continue
 					# create the ID as a relative path minus the extension
-					relative = str(Path(meta_file_path).relative_to(self.dir_core))
-					meta_id = relative[0:len(relative)-len(extension)]
+					meta_id = filepath_to_metadata_id( meta_file_path, self.dir_core )
 					if data["type"] == "embedding":
 						self.embedding_meta[meta_id] = EmbeddingMeta(meta_id, meta_file_path)
 					elif data["type"] == "topic_model":
@@ -133,7 +145,7 @@ class WebCore:
 class TopicModelMeta(dict):
 
 	def __init__(self, model_id, meta_file_path):
-		log.info("Parsing model metadata from %s" % meta_file_path)
+		log.info("Loading model metadata from %s" % meta_file_path)
 		# read the JSON
 		fin = open(meta_file_path, "r")
 		data = json.load(fin)

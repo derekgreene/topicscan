@@ -67,6 +67,12 @@ body
 
 /** Forms */
 
+.custom-btn
+{
+  font-size: 95%;
+  margin-bottom: 0.8em;
+}
+
 .input-group-text
 {
   font-size: 95%;
@@ -235,4 +241,11 @@ body
   font-size: 95%;
   line-height: 2.3;
   vertical-align: middle;
+}
+
+/** Comparison Page */
+
+#matching-table
+{
+  margin-top: 1.3em;
 }

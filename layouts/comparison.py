@@ -5,8 +5,9 @@ import dash_bootstrap_components as dbc
 import dash_core_components as dcc
 import dash_html_components as html
 # TopicScan imports
+from model.validation import TopicMatcher
 from webconfig import config
-from webcore import ModelValidator, measure_names, measure_short_names
+from webvalidation import ModelValidator, measure_names, measure_short_names
 from layouts.general import GeneralLayout
 from layouts.dftable import DataFrameTable
 # --------------------------------------------------------------
@@ -21,15 +22,16 @@ class ComparisonLayout( GeneralLayout ):
 		self.page_title = "%s - Comparison" % self.page_title
 		self.page_suffix = "-comparison"
 		# current state
+		self.top_terms = config.get("top_terms", 10)
 		self.all_metadata = all_model_metadata
 		self.current_embed_id = None
+		self.current_metadata_indices = [0, 1]
 		# cache of validation results
 		self.validation_cache = {}
 
 	def get_header_subtext( self ):
 		""" Return the string which is displayed in the header, beside the logo. """
 		return ""
-		# return "Comparing %d Models" % ( len(self.all_metadata) )
 
 	def generate_main_panel( self ):
 		""" Generate the main panel for this page. """
@@ -53,13 +55,20 @@ class ComparisonLayout( GeneralLayout ):
 						className='col-lg-12'
 					), 
 				] ),
+			dbc.Row( [
+					html.Div([
+						dcc.Link(id="amatching", href=""),
+						dbc.Col( self.generate_matching_card() ) ],
+						className='col-lg-12'
+					), 
+				] ),			
 			], className='content'
 		)
 
 	def generate_overview_card( self ):
 		return dbc.Card(
 			[
-				dbc.CardHeader("Overview: Model Comparison", className="card-header"),
+				dbc.CardHeader("Overview: Model Summary", className="card-header"),
 				dbc.CardBody(
 					[
 						html.Div( self.generate_overview_card_text(), className="card-text"),
@@ -106,18 +115,49 @@ class ComparisonLayout( GeneralLayout ):
 				),
 			])
 
+	def generate_matching_card( self ):
+		return dbc.Card(
+			[
+				dbc.CardHeader("Topic Matching", className="card-header"),
+				dbc.CardBody(
+					[
+						html.Div( self.generate_matching_card_text(), className="card-text"),
+						dbc.Row( [
+							dbc.InputGroup(
+								[
+									dbc.InputGroupAddon("Select Model 1", addon_type="prepend"),
+									self.generate_model_dropdown(1)
+								], className="col-sm"
+							),
+							dbc.InputGroup(
+								[
+									dbc.InputGroupAddon("Select Model 2", addon_type="prepend"),
+									self.generate_model_dropdown(2)
+								], className="col-sm"
+							),
+						] ),
+						html.Div( self.generate_matching_table(), id='content_matching'),
+					]
+				),
+			])
+
 	def generate_overview_card_text( self ):
 		text = "Validation measures can be applied to compare the %d topic models listed below:" % ( len(self.all_metadata) ) 
 		return dcc.Markdown( text )
 
 	def generate_vtable_card_text( self ):		
 		text = "Comparison of model-level validation scores for %d topic models," % len(self.all_metadata)
-		text += " using %d validation measures, where distances and similarities are calculated on the word embedding selected below." % len(measure_short_names)
+		text += " using %d validation measures, where distances and similarities are calculated using the word embedding selected below." % len(measure_short_names)
 		return dcc.Markdown(text)
 
 	def generate_vchart_card_text( self ):
 		text = "Select a topic validation measure below to view a chart comparing %d topic models," % len(self.all_metadata)
 		text += " based on the word embedding selected above."
+		return dcc.Markdown(text)
+
+	def generate_matching_card_text( self ):
+		text = "Select 2 topic models below to identify the best matching topic pairs between both selected models."
+		text += " The similarity scores used in the matching process are calculated using the word embedding selected above."
 		return dcc.Markdown(text)
 
 	def generate_model_table( self ):
@@ -237,17 +277,80 @@ class ComparisonLayout( GeneralLayout ):
 						'y': yvalues, 
 						'type': 'bar',
 						'orientation' : 'h',
-						'marker' : { 'color': 'rgba(103, 232, 0, 0.6)', 'opacity': 0.6 },
+						'marker' : { 'color': 'rgba(18, 0, 230, 0.6)', 'opacity': 0.6 },
 						'hoverlabel' : { 'bgcolor' : 'rgb(250, 246, 208)' }
 		    		},
 				],
 				'layout': 
 				{ 
 					'height' : chart_height,
-					'margin': { "t" : 40, "l" : 200, "r" : 200 },
+					'margin': { "t" : 40, "l" : 320, "r" : 50 },
 					'yaxis' : { 'tickfont' : { "size" : 14 } },
 					'xaxis' : { 'title' : measure_names[self.current_measure_id], 'titlefont' : { "size" : 15 } },
 					'tickfont' : { "size" : 14 },
 					'titlefont' : { "size" : 15 } 
 				}
 			})	
+
+	def generate_matching_table( self ):
+		if self.current_embed_id is None:
+			return ""
+		embed = self.webcore.get_embedding(self.current_embed_id)
+		if embed is None:
+			return ""
+		descriptors1 = self.all_metadata[self.current_metadata_indices[0]].get_descriptors()
+		descriptors2 = self.all_metadata[self.current_metadata_indices[1]].get_descriptors()
+		if descriptors1 is None or descriptors2 is None:
+			return ""
+		# perform the match
+		matcher = TopicMatcher(embed)
+		permutation, similarities = matcher.match(descriptors1, descriptors2)
+		# create the table
+		k1, k2 = len(descriptors1), len(descriptors2)
+		num_fmt = "%02d" if max(k1,k2) < 100 else "%03d"
+		rows = []
+		matched_model2 = []
+		for topic_index1 in range(k1):
+			topic_index2 = permutation[topic_index1]
+			matched_model2.append(topic_index2)
+			ranking1 = descriptors1[topic_index1]
+			row = { "Topic 1":num_fmt % (topic_index1+1) }
+			row["Descriptor 1"] = ", ".join(ranking1[0:self.top_terms])
+			if topic_index2 < k2:
+				ranking2 = descriptors2[topic_index2]
+				row["Topic 2"] = num_fmt % (topic_index2+1)
+				row["Descriptor 2"] = ", ".join(ranking2[0:self.top_terms])
+				row["Similarity"] = config.get("float_format","%.3f") % similarities[topic_index1]
+			else:
+				row["Topic 2"] = ""
+				row["Descriptor 2"] = ""
+				row["Similarity"] = ""
+			rows.append( row )
+		for topic_index2 in range(k2):
+			if topic_index2 in matched_model2:
+				continue
+			ranking2 = descriptors2[topic_index2]
+			row = { "Topic 2":num_fmt % (topic_index2+1) }
+			row["Descriptor 2"] = ", ".join(ranking2[0:self.top_terms])
+			row["Topic 1"] = ""
+			row["Descriptor 1"] = ""
+			row["Similarity"] = ""
+			rows.append( row )
+		df = pd.DataFrame(rows)
+		alignments = { "Topic 1":"center", "Topic 2":"center", "Similarity":"center" }
+		return DataFrameTable( df, id="matching-table", alignments=alignments, striped=False, hover=False ).generate_layout()
+
+	def generate_model_dropdown( self, dropdown_number ):
+		""" Utility function to generate a dropdown component which allows the user
+		to choose between different topic models. """
+		model_options = []
+		for i, meta in enumerate(self.all_metadata):
+			model_options.append( { "label":meta["id"], "value":str(i) } ) 
+		component_id = "compare-model-dropdown%d" % dropdown_number
+		if len(model_options) > dropdown_number-1:
+			return dbc.Select(
+				id=component_id,
+				options=model_options,
+				value=str(self.current_metadata_indices[dropdown_number-1])
+			)
+		return dbc.Select(id=component_id, options=model_options )

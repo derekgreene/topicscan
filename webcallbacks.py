@@ -29,7 +29,7 @@ def register_topics_callbacks(app):
 	@app.callback(Output('content_term_assoc', 'children'), 
 		[Input('url', 'href'), Input('topic-term-dropdown', 'value')])
 	def topics_term_assoc_topic(href, topic_index):
-		log.info("Callback: topics_term_assoc_topic: %s" % topic_index)
+		log.debug("Callback: topics_term_assoc_topic: %s" % topic_index)
 		uid, error = extract_uid(href)
 		if error is not None:
 			log.error("%s: %s" % (error, href))
@@ -40,7 +40,7 @@ def register_topics_callbacks(app):
 	@app.callback(Output('content_document_assoc', 'children'), 
 		[Input('url', 'href'), Input('topic-document-dropdown', 'value')])
 	def topics_document_assoc_topic(href, topic_index):
-		log.info("Callback: topics_document_assoc_topic: %s" % topic_index)
+		log.debug("Callback: topics_document_assoc_topic: %s" % topic_index)
 		uid, error = extract_uid(href)
 		if error is not None:
 			log.error("%s: %s" % (error, href))
@@ -81,7 +81,7 @@ def register_validation_callbacks(app):
 	@app.callback(Output('content_vtable', 'children'),
 		[Input('url', 'href'), Input('embed-dropdown', 'value')])
 	def update_embed_dropdown1(href, embed_id):
-		log.info("Callback: update_embed_dropdown1: embed_id=%s" % embed_id)
+		log.debug("Callback: update_embed_dropdown1: embed_id=%s" % embed_id)
 		uid, error = extract_uid(href)
 		if error is not None:
 			log.error("%s: %s" % (error, href))
@@ -92,7 +92,7 @@ def register_validation_callbacks(app):
 	@app.callback(Output('content_vchart', 'children'),
 		[Input('url', 'href'), Input('measure-dropdown', 'value'), Input('embed-dropdown', 'value')])
 	def validation_measure_dropdown1(href, measure_id, embed_id):
-		log.info("Callback: validation_measure_dropdown1: measure_id=%s embed_id=%s" % (measure_id, embed_id))
+		log.debug("Callback: validation_measure_dropdown1: measure_id=%s embed_id=%s" % (measure_id, embed_id))
 		uid, error = extract_uid(href)
 		if error is not None:
 			log.error("%s: %s" % (error, href))
@@ -104,7 +104,7 @@ def register_validation_callbacks(app):
 	@app.callback(Output('content_vsummary', 'children'),
 		[Input('url', 'href'), Input('measure-dropdown', 'value'), Input('embed-dropdown', 'value')])
 	def validation_measure_dropdown2(href, measure_id, embed_id):
-		log.info("Callback: validation_measure_dropdown2: measure_id=%s embed_id=%s" % (measure_id, embed_id))
+		log.debug("Callback: validation_measure_dropdown2: measure_id=%s embed_id=%s" % (measure_id, embed_id))
 		uid, error = extract_uid(href)
 		if error is not None:
 			log.error("%s: %s" % (error, href))
@@ -116,7 +116,7 @@ def register_validation_callbacks(app):
 	@app.callback(Output('content_vdistribution', 'children'), 
 		[Input('url', 'href'), Input('embed-dropdown', 'value')])
 	def validation_embed_dropdown2(href, embed_id):
-		log.info("Callback: validation_embed_dropdown2: embed_id=%s" % embed_id)
+		log.debug("Callback: validation_embed_dropdown2: embed_id=%s" % embed_id)
 		uid, error = extract_uid(href)
 		if error is not None:
 			log.error("%s: %s" % (error, href))
@@ -132,7 +132,7 @@ def register_silhouette_callbacks(app):
 	@app.callback(Output('silhouette_content_topiclevel', 'children'),
 		[Input('url', 'href'), Input('embed-dropdown', 'value')])
 	def silhouette_embed_topiclevel(href, embed_id):
-		log.info("Callback: silhouette_embed_topiclevel: %s" % embed_id)
+		log.debug("Callback: silhouette_embed_topiclevel: %s" % embed_id)
 		uid, error = extract_uid(href)
 		if error is not None:
 			log.error("%s: %s" % (error, href))
@@ -143,7 +143,7 @@ def register_silhouette_callbacks(app):
 	@app.callback(Output('silhouette_content_distribution', 'children'),
 		[Input('url', 'href'), Input('embed-dropdown', 'value')])
 	def silhouette_embed_dist(href, embed_id):
-		log.info("Callback: silhouette_embed_dist: %s" % embed_id)
+		log.debug("Callback: silhouette_embed_dist: %s" % embed_id)
 		uid, error = extract_uid(href)
 		if error is not None:
 			log.error("%s: %s" % (error, href))
@@ -154,7 +154,7 @@ def register_silhouette_callbacks(app):
 	@app.callback(Output('silhouette_content_termlevel', 'children'),
 		[Input('url', 'href'), Input('topic-sil-dropdown', 'value'), Input('embed-dropdown', 'value')])
 	def silhouette_topic_termlevel(href, topic_index, embed_id):
-		log.info("Callback: silhouette_topic_termlevel: (%s,%s)" % (topic_index,embed_id))
+		log.debug("Callback: silhouette_topic_termlevel: (%s,%s)" % (topic_index,embed_id))
 		uid, error = extract_uid(href)
 		if error is not None:
 			log.error("%s: %s" % (error, href))
@@ -172,7 +172,7 @@ def register_heatmap_callbacks(app):
 		[Input('url', 'href'), Input('embed-dropdown', 'value')])
 	def heatmap_embed_topiclevel(href, embed_id):
 		""" Callback to handle changes to the embedding dropdown """
-		log.info("Callback: heatmap_embed_topiclevel: %s" % embed_id)
+		log.debug("Callback: heatmap_embed_topiclevel: %s" % embed_id)
 		uid, error = extract_uid(href)
 		if error is not None:
 			log.error("%s: %s" % (error, href))
@@ -184,7 +184,7 @@ def register_heatmap_callbacks(app):
 		[Input('url', 'href'), Input('termlevel-dropdown', 'value'), Input('embed-dropdown', 'value')])
 	def heatmap_termlevel_dropdown(href, topic_index, embed_id):
 		""" Callback to handle changes to the topic dropdown """
-		log.info("Callback: heatmap_termlevel_dropdown: topic_index=%s embed_id=%s" % (topic_index, embed_id))
+		log.debug("Callback: heatmap_termlevel_dropdown: topic_index=%s embed_id=%s" % (topic_index, embed_id))
 		uid, error = extract_uid(href)
 		if error is not None:
 			log.error("%s: %s" % (error, href))
@@ -202,7 +202,7 @@ def register_scatter_callbacks(app):
 	@app.callback(Output('scatter_content_topiclevel', 'children'),
 		[Input('url', 'href'), Input('embed-dropdown', 'value')])
 	def scatter_embed_topiclevel(href, embed_id):
-		log.info("Callback: scatter_embed_topiclevel: %s" % embed_id)
+		log.debug("Callback: scatter_embed_topiclevel: %s" % embed_id)
 		uid, error = extract_uid(href)
 		if error is not None:
 			log.error("%s: %s" % (error, href))
@@ -213,7 +213,7 @@ def register_scatter_callbacks(app):
 	@app.callback(Output('scatter_content_termlevel', 'children'),
 		[Input('url', 'href'), Input('embed-dropdown', 'value')])
 	def scatter_embed_termlevel(href, embed_id):
-		log.info("Callback: scatter_embed_termlevel: %s" % embed_id)
+		log.debug("Callback: scatter_embed_termlevel: %s" % embed_id)
 		uid, error = extract_uid(href)
 		if error is not None:
 			log.error("%s: %s" % (error, href))

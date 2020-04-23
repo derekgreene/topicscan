@@ -16,6 +16,7 @@ external_stylesheets = [dbc.themes.BOOTSTRAP]
 # --------------------------------------------------------------
 
 class GeneralLayout:
+	""" An empty general purpose layout for a TopicScan page, designed to be subclassed. """
 
 	def __init__( self, webcore ):
 		self.webcore = webcore
@@ -46,12 +47,15 @@ class GeneralLayout:
 		)
 
 	def get_header_subtext( self ):
+		""" Return the string which is displayed in the header, beside the logo. """
 		return ""
 
 	def generate_navbar( self ):
+		""" Return the navigation bar layout for this page """
 		return ""
 
 	def generate_main_panel( self ):
+		""" Generate the main panel for this page. """
 		return ""
 
 	def get_colors( self, num_colors=10 ):
@@ -60,7 +64,9 @@ class GeneralLayout:
 
 	def get_barchart_height( self, num_rows ):
 		""" Return a fixed height for a horizontal bar chart, based on the specific number of rows. """
-		if num_rows <= 6:
+		if num_rows < 3:
+			return 300
+		elif num_rows <= 6:
 			return 400
 		elif num_rows <= 10:
 			return 510
@@ -80,11 +86,13 @@ class GeneralLayout:
 				continue
 			label = "%s (%s)" % ( embed_id, em["description"] )
 			embed_options.append( { "label":label, "value": embed_id } ) 
-		return dbc.Select(
-			id='embed-dropdown',
-			options=embed_options,
-			value=embed_options[0]["value"]
-		)
+		if len(embed_options) > 0:
+			return dbc.Select(
+				id='embed-dropdown',
+				options=embed_options,
+				value=embed_options[0]["value"]
+			)
+		return dbc.Select(id='embed-dropdown', options=embed_options )
 
 	def generate_measure_dropdown( self ):
 		""" Utility function to generate a dropdown component which allows the user

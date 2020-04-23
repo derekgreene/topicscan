@@ -44,29 +44,39 @@ class DataFrameTable:
 
 	def generate_header( self, columns ):
 		""" Generate the header row layout for the table """
-		th_list = []
+		th_list = self.generate_th_list( columns )
 		# display the index as a column?
 		if self.show_index:
 			style = {}
 			if "index" in self.alignments:
 				 style["text-align"] = self.alignments["index"]
-			th_list.append( html.Th(self.index_name, style=style, className="dftable-header-name") )
-		for col in columns:
-			style = {}
-			if col in self.alignments:
-				 style["text-align"] = self.alignments[col]
-			th_list.append( html.Th(col, style=style, className="dftable-header-name") )
+			th_list.insert( 0, html.Th(self.index_name, style=style, className="dftable-header-name") )
 		table_header = [
 	    	html.Thead( html.Tr(th_list), className="dftable-header")
 		]
 		return table_header
 
+	def generate_th_list( self, columns ):
+		th_list = []
+		for col in columns:
+			style = {}
+			if col in self.alignments:
+				 style["text-align"] = self.alignments[col]
+			th_list.append( html.Th(col, style=style, className="dftable-header-name") )
+		return th_list		
+
 	def generate_row( self, index, row, columns, is_summary = False ):
 		""" Generate the content for an individual table row """
-		row_cells = []
+		row_cells = self.generate_row_cells( index, row, columns ) 
 		# add index cell?
 		if self.show_index:
-			row_cells.append( html.Td( index ) )
+			row_cells.insert( 0, html.Td( index ) )
+		if is_summary:
+			return html.Tr( row_cells, className="dftable-summaryrow" )
+		return html.Tr( row_cells, className="dftable-row" )
+
+	def generate_row_cells( self, index, row, columns ):
+		row_cells = []
 		url = None if not index in self.links else self.links[index]
 		for col in columns:
 			style = {}
@@ -80,6 +90,50 @@ class DataFrameTable:
 			else:
 				row_cells.append( html.Td( html.A(value, href=url, target="_blank"), 
 					style=style, className="dftable-cell" ) ) 
+		return row_cells
+
+# --------------------------------------------------------------
+
+class CheckboxTable(DataFrameTable):
+
+	def __init__( self, df, id = "dfcheckboxtable", alignments = {}, links = {}, show_index = False, 
+			bordered = False, striped = False, hover = False, summary_row = False, select_label = "" ):
+		super(CheckboxTable, self).__init__( df, id, alignments, links, show_index, bordered, striped, hover, summary_row )
+		self.select_label = select_label
+
+	def generate_header( self, columns ):
+		""" Generate the header row layout for the table """
+		th_list = self.generate_th_list( columns )
+		# display the index as a column?
+		if self.show_index:
+			style = {}
+			if "index" in self.alignments:
+				 style["text-align"] = self.alignments["index"]
+			th_list.insert( 0, html.Th(self.index_name, style=style, className="dftable-header-name") )
+		# add selection
+		style = { "text-align":"center" }
+		th_list.insert( 0, html.Th(self.select_label, style=style, className="dftable-header-name") )
+		# return the header row
+		table_header = [
+	    	html.Thead( html.Tr(th_list), className="dftable-header")
+		]
+		return table_header
+
+	def generate_row( self, index, row, columns, is_summary = False ):
+		""" Generate the content for an individual table row """
+		row_cells = self.generate_row_cells( index, row, columns ) 
+		# add index cell?
+		if self.show_index:
+			row_cells.insert( 0, html.Td( index ) )
 		if is_summary:
 			return html.Tr( row_cells, className="dftable-summaryrow" )
-		return html.Tr( row_cells, className="dftable-row" )
+		# add check box cell
+		checkbox_id = "check_%s" % index
+		style = { "text-align":"center" }
+		row_cells.insert( 0, html.Td( 
+			html.Div( 
+					dbc.Checkbox( className="form-check-input", id=checkbox_id ),
+				className="custom-control custom-checkbox", style=style)
+			 ) )
+		# return the table row
+		return html.Tr( row_cells, className="dftable-row" )		

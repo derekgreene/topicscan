@@ -4,8 +4,8 @@ import dash_bootstrap_components as dbc
 import dash_core_components as dcc
 import dash_html_components as html
 from webconfig import config
-from .general import GeneralLayout
-from .dftable import DataFrameTable
+from layouts.general import GeneralLayout
+from layouts.dftable import DataFrameTable, CheckboxTable
 
 # --------------------------------------------------------------
 
@@ -44,13 +44,13 @@ class IndexLayout( GeneralLayout ):
 		return html.Div([
 			dbc.Row(
 				html.Div([
-					dcc.Link(id="amodels"),
+					dcc.Link(id="amodels", href=""),
 					dbc.Col( self.generate_model_card() ) ],
 					className='col-lg-12'
 				) ),
 			dbc.Row(
 				html.Div([
-					dcc.Link(id="aembeddings"),
+					dcc.Link(id="aembeddings", href=""),
 					dbc.Col( self.generate_embedding_card() ) ],
 					className='col-lg-12'
 				) ),
@@ -63,7 +63,10 @@ class IndexLayout( GeneralLayout ):
 				dbc.CardHeader("Topic Models", className="card-header"),
 				dbc.CardBody(
 					[
-						html.Div( self.generate_model_card_text(), className="card-text"),
+						dbc.Row( [
+							dbc.Col(html.Div(self.generate_model_card_text(), className="card-text"), width=9),
+							dbc.Col(dbc.Button("Compare Models", className="custom-btn"), width=3, className="text-right")
+						] ),
 						html.Div( self.generate_model_table() ),
 					]
 				),
@@ -76,8 +79,8 @@ class IndexLayout( GeneralLayout ):
 				dbc.CardHeader("Word Embeddings"),
 				dbc.CardBody(
 					[
-						html.Div( self.generate_embedding_card_text(), className="card-text"),
-						html.Div( self.generate_embedding_table() ),
+						html.Div(self.generate_embedding_card_text(), className="card-text"),
+						html.Div(self.generate_embedding_table()),
 					]
 				),
 			],
@@ -90,6 +93,7 @@ class IndexLayout( GeneralLayout ):
 		else:
 			text = "Found %d topic models in the directory *%s*." % ( count, self.webcore.dir_core )
 		text += " To explore a model in detail, click on a row below."
+		text += " To compare two or more models, select them and click *Compare Models*."
 		return dcc.Markdown( text )
 
 	def generate_embedding_card_text( self ):
@@ -98,7 +102,7 @@ class IndexLayout( GeneralLayout ):
 			text = "Found 1 word embedding in the directory *%s*." % ( self.webcore.dir_core )
 		else:
 			text = "Found %d word embeddings in the directory *%s*." % ( count, self.webcore.dir_core )
-		text += " To explore a mowword embedding in detail, click on a row below."
+		text += " To explore a word embedding in detail, click on a row below."
 		return dcc.Markdown( text )
 
 	def generate_model_table( self ):
@@ -110,12 +114,14 @@ class IndexLayout( GeneralLayout ):
 		for index, row in df.iterrows():
 			model_id = row["Name"]
 			links[index] = self.generate_link( "topics", { "id":model_id } )
-		return DataFrameTable( df, id="model-table", links=links, alignments=alignments, striped=False, hover=True ).generate_layout()
+		# generate the table with checkboxes
+		return CheckboxTable( df, id="model-table", links=links, alignments=alignments, 
+			striped=False, hover=True, select_label="Select" ).generate_layout()
 
 	def generate_embedding_table( self ):
 		""" Generate a Bootstrap table containing list of current word embedding metadata. """
 		df = self.webcore.df_embeddings.sort_values( by="Name" )
-		alignments = { "Dimensions" : "right", "Documents" : "right", "Terms" : "right" }
+		alignments = { "Dimensions" : "right", "Terms" : "right" }
 		# create the links to other pages
 		links = {}
 		for index, row in df.iterrows():
