@@ -20,7 +20,7 @@ Alternatively, we could generate a range of NMF with NNDSVD topic models on the 
 
 ```python topic_nmf.py data/prep/guardian-2009.pkl --init nndsvd --kmin 5 --kmax 12 -r 1 -o data/models/guardian-2009```
 
-#### Exploration of Results
+#### Exploring the Results
 
 Once the models have been generated and stored in the directory data/models, we can start to explore and validate these models:
 
@@ -46,7 +46,7 @@ Alternatively, we could generate a range of NMF with NNDSVD topic models on the 
 
 ```python topic_nmf.py data/prep/bbc.pkl --init nndsvd --kmin 4 --kmax 6 -r 1 -o data/models/bbc```
 
-#### Exploration of Results
+#### Exploring the Results
 
 Once the models have been generated and stored in the directory data/models, we can start to explore and validate these models:
 
