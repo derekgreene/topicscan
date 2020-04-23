@@ -250,3 +250,41 @@ class TopicSilhouetteScore:
 			return 0.0
 		return np.array(pair_scores).mean()
 
+
+# --------------------------------------------------------------
+
+class TopicMatcher:
+	"""
+	Uses a word embedding to find the closest matching topics in one model to those in
+	another.
+	"""
+	def __init__(self, embed):
+		self.measure = TopicDifferenceScore(embed)
+
+	def match(self, descriptors1, descriptors2):
+		permutation = []
+		similarities = []
+		for descriptor1 in descriptors1:
+			best_match = -1
+			max_sim = -1000
+			for topic_index2, descriptor2 in enumerate(descriptors2):
+				embedding_sim = self.measure.evaluate_similarity(descriptor1, descriptor2)
+				jaccard_sim = self.__jaccard(descriptor1, descriptor2)
+				sim = max(embedding_sim, jaccard_sim)
+				if sim > max_sim:
+					best_match = topic_index2
+					max_sim = sim
+			permutation.append( best_match )
+			similarities.append( max_sim )
+		return permutation, similarities
+
+	def __jaccard(self, ranking1, ranking2):
+		sx = set(ranking1)
+		sy = set(ranking2)
+		numer = len( sx.intersection(sy) )
+		if numer == 0:
+			return 0.0
+		denom = len( sx.union(sy) )
+		if denom == 0:
+			return 0.0
+		return float(numer)/denom
