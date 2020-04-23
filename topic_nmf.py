@@ -17,8 +17,8 @@ import text.util, model.nmf, model.util
 def main():
 	parser = OptionParser(usage="usage: %prog [options] corpus_file")
 	parser.add_option("--seed", action="store", type="int", dest="seed", help="random seed", default=1000)
-	parser.add_option("--kmin", action="store", type="int", dest="kmin", help="minimum number of topics", default=5)
-	parser.add_option("--kmax", action="store", type="int", dest="kmax", help="maximum number of topics", default=5)
+	parser.add_option("--kmin", action="store", type="int", dest="kmin", help="minimum number of topics (default is 5)", default=5)
+	parser.add_option("--kmax", action="store", type="int", dest="kmax", help="maximum number of topics (if not specified, this will be kmin)", default=-1)
 	parser.add_option('--step' ,type="int", dest="step", help="Step size for incrementing the number of topics", default=1)
 	parser.add_option("-i","--init", action="store", type="string", dest="init_strategy", help="initialization strategy (random or nndsvd)", default="random")
 	parser.add_option("--maxiters", action="store", type="int", dest="maxiters", help="maximum number of iterations", default=100)
@@ -32,6 +32,13 @@ def main():
 	# control level of log output
 	log_level = log.DEBUG if options.debug else log.INFO
 	log.basicConfig(level=log_level, format='%(message)s')
+	# validate the number of topics
+	kmin, kmax = options.kmin, options.kmax
+	if kmin < 2:
+		log.error("Error: Invalid value for number of topics kmin=%s" % kmin)
+		sys.exit(1)
+	if kmax < 2:
+		kmax = kmin
 
 	# where will we store the output files?
 	if options.dir_out is None:
@@ -55,8 +62,8 @@ def main():
 	impl = model.nmf.NMFWrapper(max_iters=options.maxiters, init_strategy=options.init_strategy)
 
 	# generate all NMF topic models for the specified numbers of topics
-	log.info("Generating NMF models in range k=[%d,%d], init_strategy=%s" % (options.kmin, options.kmax, options.init_strategy))
-	for k in range(options.kmin, options.kmax+1, options.step):
+	log.info("Generating NMF models in range k=[%d,%d], init_strategy=%s" % (kmin, kmax, options.init_strategy))
+	for k in range(kmin, kmax+1, options.step):
 		# set the current random state
 		model.util.init_random_seeds(options.seed)
 		log.info("Applying NMF (k=%d, runs=%d, seed=%s) ..." % (k, options.runs, options.seed))

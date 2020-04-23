@@ -45,11 +45,11 @@ two possible input formats for files:
 
 Example where every line in each file represents a separate document:
 
-``` python topicscan/prep_text.py -s topicscan/text/stopwords/english.txt --tfidf --norm -o bbc data/bbc/*```
+``` python prep_text.py -s text/stopwords/english.txt --tfidf --norm -o bbc data/bbc/*```
 
 Example where every line of each text file represents a separate document:
 
-``` python topicscan/prep_text.py -s topicscan/text/stopwords/english.txt --tfidf --norm -o bbc --lines data/bbc.txt```
+``` python prep_text.py -s text/stopwords/english.txt --tfidf --norm -o bbc --lines data/bbc.txt```
 
 
 ## Usage: Generating Word Embeddings
@@ -58,11 +58,11 @@ A *word2vec* word embedding model can be created from a background corpus using 
 
 Example of generating a word2vec Skipgram (sg) model, where every line in each input file represents a separate document:
 
-``` python topicscan/prep_word2vec.py -m sg -s topicscan/text/stopwords/english.txt -o bbc-w2v-sg.bin data/bbc/*```
+``` python prep_word2vec.py -m sg -s text/stopwords/english.txt -o bbc-w2v-sg.bin data/bbc/*```
 
 Example of generating a word2vec Continuous Bag of Words (cbow) model, where every line of each input text file represents a separate document:
 
-``` python topicscan/prep_word2vec.py -m cbow -s topicscan/text/stopwords/english.txt -o bbc-w2v-cbow.bin --lines data/bbc.txt```
+``` python prep_word2vec.py -m cbow -s text/stopwords/english.txt -o bbc-w2v-cbow.bin --lines data/bbc.txt```
 
 
 ## Usage: Generating Topic Models
@@ -71,19 +71,19 @@ Once we have a preprocessed corpus prepared, we can generate topic models via th
 
 To generate a single topic model with randomly-initialized NMF, containing *k=5* topics, we can execute:
 
-``` python topicscan/topic_nmf.py bbc.pkl --init random --kmin 5 --kmax 5 -r 1 --maxiters 100 -o models/bbc```
+``` python topic_nmf.py bbc.pkl --kmin 5 -r 1 -o models/bbc```
 
 To execute 10 runs of randomly-initialized NMF, each containing *k=5* topics, we can execute:
 
-``` python topicscan/topic_nmf.py bbc.pkl --init random --kmin 5 --kmax 5 -r 10 --maxiters 100 -o models/bbc```
+``` python topic_nmf.py bbc.pkl --kmin 5 -r 10 -o models/bbc```
 
-To execute 10 runs of randomly-initialized NMF, for each value of *k* from 5 to 8, we execute:
+To execute 10 runs of randomly-initialized NMF, for each value of *k* from 5 to 12, we execute:
 
-``` python topicscan/topic_nmf.py bbc.pkl --init random --kmin 5 --kmax 8 -r 10 --maxiters 100 -o models/bbc```
+``` python topic_nmf.py bbc.pkl --kmin 5 --kmax 12 -r 10 -o models/bbc```
 
 Instead of using randomly-initialized NMF, we can use NNDSVD-based initialization (Boutsidis, 2007):
 
-``` python topicscan/topic_nmf.py bbc.pkl --init nndsvd --kmin 5 --kmax 5 -r 1 --maxiters 100 -o models/bbc```
+``` python topic_nmf.py bbc.pkl --init nndsvd --kmin 5 -r 1 -o models/bbc```
 
 Each run of NMF produces four output files. For instance, for the first run above the script produces one JSON file (#1) and three binary files (#2-4):
 
@@ -97,23 +97,23 @@ Each run of NMF produces four output files. For instance, for the first run abov
 
 To start the TopicScan interface, run the script *scan.py*. By default this will search the current directory and its subdirectories for topic model and word embedding metadata files:
 
-```python topicscan/scan.py```
+```python scan.py```
 
 We can also specify an alternative working directory to search:
 
-```python topicscan/scan.py ~/sample```
+```python scan.py ~/sample```
 
 The different pages of TopicScan interface can also be run individually. In each case, we need to specify the path to the relevant metadata file(s):
 
-```python topicscan/scan_topics.py models/bbc/nmf_k05/bbc_k05_001.meta```
+```python scan_topics.py models/bbc/nmf_k05/bbc_k05_001.meta```
 
-```python topicscan/scan_validation.py models/bbc/nmf_k05/bbc_k05_001.meta```
+```python scan_validation.py models/bbc/nmf_k05/bbc_k05_001.meta```
 
-```python topicscan/scan_silhouette.py models/bbc/nmf_k05/bbc_k05_001.meta```
+```python scan_silhouette.py models/bbc/nmf_k05/bbc_k05_001.meta```
 
-```python topicscan/scan_scatter.py  models/bbc/nmf_k05/bbc_k05_001.meta```
+```python scan_scatter.py  models/bbc/nmf_k05/bbc_k05_001.meta```
 
-```python topicscan/scan_heatmap.py  models/bbc/nmf_k05/bbc_k05_001.meta```
+```python scan_heatmap.py  models/bbc/nmf_k05/bbc_k05_001.meta```
 
 ## Usage: Generating Word Embeddings
 
@@ -121,4 +121,4 @@ A number of pre-trained word embeddings are available online [here](data/) for v
 
 Custom embeddings can also be trained using *prep_word2vec.py*. For instance, to create a *word2vec* Skipgram embedding with 100 dimensions:
 
-```python topicscan/prep_word2vec.py -m sg -d 100 data/corpora/bbc.txt --lines -o bbc-w2v-sg-d100.bin -s topicscan/text/stopwords/english.txt```
+```python prep_word2vec.py -m sg -d 100 data/corpora/bbc.txt --lines -o bbc-w2v-sg-d100.bin -s text/stopwords/english.txt```
