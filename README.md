@@ -10,11 +10,12 @@ TopicScan interface features include:
 - Comparisons across multiple topic models using these measures.
 - Visualization of topics and models via term similarity heatmaps, term silhouette plots, and multidimensional scaling  scatter plots.
 
+<!---
 For more details on TopicScan, see the paper:
 
 	TopicScan: A Visual Validation Tool for NMF Topic Models
 	Derek Greene, Mark Belford. Under Review, 2020.
-
+-->
 The web interface for TopicScan was created using the Python [Dash platform](https://plotly.com/dash) and [Bootstrap](https://getbootstrap.com) with a variant of the [ElaAdmin theme](https://github.com/puikinsh/ElaAdmin). It is designed to be run locally as a single-user web application, rather than hosted online as a multi-user web application.
 
 ## Dependencies
