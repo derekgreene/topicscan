@@ -100,6 +100,26 @@ class CheckboxTable(DataFrameTable):
 			bordered = False, striped = False, hover = False, summary_row = False, select_label = "" ):
 		super(CheckboxTable, self).__init__( df, id, alignments, links, show_index, bordered, striped, hover, summary_row )
 		self.select_label = select_label
+		self.checkbox_ids = []
+
+	# def generate_layout( self ):
+	# 	""" Generate the full layout for the current table """
+	# 	if self.df is None:
+	# 		return ""
+	# 	# create the header
+	# 	columns = list( self.df.columns )
+	# 	table_header = self.generate_header( columns )
+	# 	# create the content
+	# 	table_rows = []
+	# 	for index, row in self.df.iterrows():
+	# 		is_summary = self.summary_row and ( len(table_rows) == len(self.df) - 1 )
+	# 		table_rows.append( self.generate_row( index, row, columns, is_summary ) )
+	# 	table_body = [html.Tbody( table_rows )]
+	# 	# create the full table as a Bootstrap Table
+	# 	tab = dbc.Table(table_header + table_body, 
+	# 		bordered=self.bordered, striped=self.striped, hover=self.hover,
+	# 		id = self.id, className="dftable")
+	# 	return dbc.FormGroup( tab )
 
 	def generate_header( self, columns ):
 		""" Generate the header row layout for the table """
@@ -128,11 +148,12 @@ class CheckboxTable(DataFrameTable):
 		if is_summary:
 			return html.Tr( row_cells, className="dftable-summaryrow" )
 		# add check box cell
-		checkbox_id = "check_%s" % index
+		checkbox_id = "check_%s" % len(self.checkbox_ids)
+		self.checkbox_ids.append( checkbox_id )
 		style = { "text-align":"center" }
 		row_cells.insert( 0, html.Td( 
 			html.Div( 
-					dbc.Checkbox( className="form-check-input", id=checkbox_id ),
+					dbc.Checkbox( className="form-check-input", id=checkbox_id, checked=False ),
 				className="custom-control custom-checkbox", style=style)
 			 ) )
 		# return the table row

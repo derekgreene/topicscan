@@ -1,9 +1,9 @@
 #!/usr/bin/env python
 """
-Script implementing the main TopicScan interface.
+Script implementing the main TopicScan web interface.
 
 Sample usage:
-``` python topicscan/scan.py ~/sample ```
+``` python scan.py ~/sample ```
 """
 import sys
 from urllib.parse import urlparse, parse_qs
@@ -19,6 +19,7 @@ from webcore import WebCore
 from webcallbacks import layout_cache
 from webcallbacks import register_topics_callbacks, register_embedding_callbacks, register_validation_callbacks
 from webcallbacks import register_heatmap_callbacks, register_scatter_callbacks, register_silhouette_callbacks
+from webcallbacks import register_comparison_callbacks
 from layouts.general import external_stylesheets
 from layouts.index import IndexLayout
 from layouts.topics import TopicModelLayout
@@ -28,6 +29,7 @@ from layouts.validation import ValidationLayout
 from layouts.silhouette import SilhouetteLayout
 from layouts.heatmap import HeatmapLayout
 from layouts.scatter import ScatterLayout
+from layouts.comparison import ComparisonLayout
 
 # --------------------------------------------------------------
 
@@ -159,7 +161,24 @@ def main():
 			topic_metadata = webcore.get_topic_model_metadata(param_id)
 			topic_metadata.load_all_files()
 			layout_cache[param_uid] = ScatterLayout(webcore, topic_metadata)
-			return layout_cache[param_uid].generate_layout()			
+			return layout_cache[param_uid].generate_layout()
+		# comparison page 	
+		elif layout_name == "compare":
+			if len(param_uid) == 0:
+				return ErrorLayout(webcore, "No unique state identifier was provided.").generate_layout()
+			all_model_metadata = []
+			for key in query:
+				if key.startswith("id") and len(query[key]) > 0:
+					model_id = query[key][0]
+					topic_metadata = webcore.get_topic_model_metadata(model_id)
+					if topic_metadata is None:
+						log.warning("Cannot load topic model metadata for model_id=%s" % model_id)
+					else:
+						all_model_metadata.append( topic_metadata )
+			if len(all_model_metadata) == 0:
+				return ErrorLayout(webcore, "No valid model identifiers were provided.").generate_layout()
+			layout_cache[param_uid] = ComparisonLayout(webcore, all_model_metadata)
+			return layout_cache[param_uid].generate_layout()
 		# unknown layout
 		log.warning("404: Invalid request for layout %s: %s" % (layout_name, pathname))
 		return ErrorLayout(webcore, "Cannot access unknown page **%s**." % layout_name).generate_layout()
@@ -171,6 +190,19 @@ def main():
 	register_silhouette_callbacks(app)
 	register_heatmap_callbacks(app)
 	register_scatter_callbacks(app)
+	register_comparison_callbacks(app)
+
+	# Additional main page callbacks
+	count = webcore.get_topic_model_count()
+	# create callbacks for all the checkboxes
+	checkbox_inputs = []
+	for i in range(count):
+		checkbox_inputs.append( Input("check_%d" % i, "checked") )		
+	@app.callback(Output("div-compare-btn", "children"), checkbox_inputs )
+	def on_checkbox_change( *args ):
+		layout_index.checkbox_state = list(args)
+		log.debug("Callback: on_checkbox_change: %s" % layout_index.checkbox_state)
+		return layout_index.generate_model_button()
 
 	# start the web server
 	app.run_server(debug=options.debug)

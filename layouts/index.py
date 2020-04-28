@@ -12,11 +12,14 @@ from layouts.dftable import DataFrameTable, CheckboxTable
 class IndexLayout( GeneralLayout ):
 	""" Implements the main page of the TopicScan web interface. """
 
-	def __init__( self, webcore, show_navbar = True ):
+	def __init__( self, webcore, show_navbar = False ):
 		super(IndexLayout, self).__init__( webcore )
 		self.show_navbar = show_navbar
 		# page details
 		self.page_suffix = "-main"
+		# state relatex to the topic model checkbox selection
+		self.model_checkboxes = []
+		self.checkbox_state = []
 
 	def get_header_subtext( self ):
 		""" Return the string which is displayed in the header, beside the logo. """
@@ -64,14 +67,29 @@ class IndexLayout( GeneralLayout ):
 				dbc.CardBody(
 					[
 						dbc.Row( [
-							dbc.Col(html.Div(self.generate_model_card_text(), className="card-text"), width=9),
-							dbc.Col(dbc.Button("Compare Models", className="custom-btn"), width=3, className="text-right")
+							dbc.Col( html.Div(self.generate_model_card_text(), className="card-text"), width=9 ),
+							dbc.Col( html.Div(self.generate_model_button(), id="div-compare-btn"), width=3, className="text-right")
 						] ),
 						html.Div( self.generate_model_table() ),
 					]
 				),
 			],
 		)
+
+	def generate_model_button( self ):
+		""" Build a button to launch the Comparison page, with an appropriate URL
+		based on the selected checkboxes for topic models. """
+		# build the appropriate URL
+		query = {}
+		for i in range(len(self.checkbox_state)):
+			if self.checkbox_state[i]:
+				query["id%d" % (len(query)+1) ] = self.model_checkboxes[i]
+		# nothing ticked? then disable the button
+		if len(query) == 0:
+			return dbc.Button("Compare Models", className="custom-btn", disabled=True)
+		url = self.generate_link("compare", query)
+		return dbc.Button("Compare Models", className="custom-btn",  
+			href=url, target="_blank", external_link=True)
 
 	def generate_embedding_card( self ):
 		return dbc.Card(
@@ -113,10 +131,15 @@ class IndexLayout( GeneralLayout ):
 		links = {}
 		for index, row in df.iterrows():
 			model_id = row["Name"]
-			links[index] = self.generate_link( "topics", { "id":model_id } )
-		# generate the table with checkboxes
-		return CheckboxTable( df, id="model-table", links=links, alignments=alignments, 
-			striped=False, hover=True, select_label="Select" ).generate_layout()
+			links[index] = self.generate_link( "topics", {"id":model_id} )
+		# generate the table with checkboxes, and keep a record of the boxes
+		model_table = CheckboxTable( df, id="model-table", links=links, alignments=alignments, 
+			striped=False, hover=True, select_label="Select" )
+		table = model_table.generate_layout()
+		self.model_checkboxes = [] 
+		for i in range(len(model_table.checkbox_ids)):
+			self.model_checkboxes.append( df.iloc[i]["Name"] )
+		return table
 
 	def generate_embedding_table( self ):
 		""" Generate a Bootstrap table containing list of current word embedding metadata. """

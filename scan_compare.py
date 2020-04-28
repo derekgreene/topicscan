@@ -3,7 +3,7 @@
 Script providing access to the TopicScan page for comparing two or more topic models.
 
 Sample usage:
-``` python topicscan/scan_compare.py ~/sample/models/bbc/nmf_k05/bbc_k05_001.meta ~/sample/models/bbc/nndsvd_k05/bbc_1000_001.meta```
+``` python scan_compare.py data/models/bbc/nndsvd_k04/bbc_1000_001.meta data/models/bbc/nndsvd_k05/bbc_1000_001.meta```
 """
 import sys
 from pathlib import Path
@@ -72,14 +72,14 @@ def main():
 	# --------------------------------------------------------------
 	# Callbacks for ComparisonLayout 
 
-	@app.callback(Output('content_vtable', 'children'),
+	@app.callback(Output('content_compare_vtable', 'children'),
 		[Input('embed-dropdown', 'value')])
 	def update_compare_embed_dropdown(embed_id):
 		log.info("Callback: update_embed_dropdown: embed_id=%s" % embed_id)
 		layout.current_embed_id = embed_id
 		return layout.generate_vtable()
 
-	@app.callback(Output('content_vchart', 'children'),
+	@app.callback(Output('content_compare_vchart', 'children'),
 		[Input('measure-dropdown', 'value'), Input('embed-dropdown', 'value')])
 	def update_compare_measure_dropdown(measure_id, embed_id):
 		log.info("Callback: update_measure_dropdown: measure_id=%s embed_id=%s" % (measure_id, embed_id))
@@ -87,7 +87,7 @@ def main():
 		layout.current_embed_id = embed_id
 		return layout.generate_vchart()
 
-	@app.callback(Output('content_matching', 'children'),
+	@app.callback(Output('content_compare_matching', 'children'),
 		[Input('compare-model-dropdown1', 'value'), Input('compare-model-dropdown2', 'value')])
 	def update_compare_model_dropdown1(s_index1, s_index2):
 		model_index1, model_index2 = int(s_index1), int(s_index2)

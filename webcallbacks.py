@@ -198,7 +198,6 @@ def register_heatmap_callbacks(app):
 def register_scatter_callbacks(app):
 	""" Set up the callbacks for ScatterLayout """
 
-	# set up the callbacks
 	@app.callback(Output('scatter_content_topiclevel', 'children'),
 		[Input('url', 'href'), Input('embed-dropdown', 'value')])
 	def scatter_embed_topiclevel(href, embed_id):
@@ -220,3 +219,43 @@ def register_scatter_callbacks(app):
 			return error
 		layout_cache[uid].current_embed_id = embed_id
 		return layout_cache[uid].generate_termlevel_plot()	
+
+# --------------------------------------------------------------
+
+def register_comparison_callbacks(app):
+	""" Set up the callbacks for ComparisonLayout """
+
+	@app.callback(Output('content_compare_vtable', 'children'),
+		[Input('url', 'href'), Input('embed-dropdown', 'value')])
+	def update_compare_embed_dropdown(href, embed_id):
+		log.info("Callback: update_embed_dropdown: embed_id=%s" % embed_id)
+		uid, error = extract_uid(href)
+		if error is not None:
+			log.error("%s: %s" % (error, href))
+			return error
+		layout_cache[uid].current_embed_id = embed_id
+		return layout_cache[uid].generate_vtable()
+
+	@app.callback(Output('content_compare_vchart', 'children'),
+		[Input('url', 'href'), Input('measure-dropdown', 'value'), Input('embed-dropdown', 'value')])
+	def update_compare_measure_dropdown(href, measure_id, embed_id):
+		log.info("Callback: update_measure_dropdown: measure_id=%s embed_id=%s" % (measure_id, embed_id))
+		uid, error = extract_uid(href)
+		if error is not None:
+			log.error("%s: %s" % (error, href))
+			return error
+		layout_cache[uid].current_measure_id = measure_id
+		layout_cache[uid].current_embed_id = embed_id
+		return layout_cache[uid].generate_vchart()
+
+	@app.callback(Output('content_compare_matching', 'children'),
+		[Input('url', 'href'), Input('compare-model-dropdown1', 'value'), Input('compare-model-dropdown2', 'value')])
+	def update_compare_model_dropdown1(href, s_index1, s_index2):
+		model_index1, model_index2 = int(s_index1), int(s_index2)
+		log.info("Callback: update_compare_model_dropdown: model_index1=%d model_index2=%d" % (model_index1, model_index2) )
+		uid, error = extract_uid(href)
+		if error is not None:
+			log.error("%s: %s" % (error, href))
+			return error
+		layout_cache[uid].current_metadata_indices = [model_index1, model_index2]
+		return layout_cache[uid].generate_matching_table()

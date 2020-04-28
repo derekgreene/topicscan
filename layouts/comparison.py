@@ -12,7 +12,7 @@ from layouts.general import GeneralLayout
 from layouts.dftable import DataFrameTable
 # --------------------------------------------------------------
 
-class ComparisonLayout( GeneralLayout ):
+class ComparisonLayout(GeneralLayout):
 
 	def __init__( self, webcore, all_model_metadata ):
 		super(ComparisonLayout, self).__init__( webcore )
@@ -92,7 +92,7 @@ class ComparisonLayout( GeneralLayout ):
 								self.generate_embedding_dropdown()
 							]
 						),
-						html.Div( self.generate_vtable(), id='content_vtable'),
+						html.Div( self.generate_vtable(), id='content_compare_vtable'),
 					]
 				),
 			], id="content_vtable_card")
@@ -110,7 +110,7 @@ class ComparisonLayout( GeneralLayout ):
 								self.generate_measure_dropdown()
 							]
 						),
-						html.Div( self.generate_vchart(), id='content_vchart'),
+						html.Div( self.generate_vchart(), id='content_compare_vchart'),
 					]
 				),
 			])
@@ -136,7 +136,7 @@ class ComparisonLayout( GeneralLayout ):
 								], className="col-sm"
 							),
 						] ),
-						html.Div( self.generate_matching_table(), id='content_matching'),
+						html.Div( self.generate_matching_table(), id='content_compare_matching'),
 					]
 				),
 			])
