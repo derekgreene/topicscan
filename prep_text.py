@@ -24,6 +24,7 @@ def main():
 	parser.add_option("--tfidf", action="store_true", dest="apply_tfidf", help="apply TF-IDF term weight to the document-term matrix")
 	parser.add_option("--norm", action="store_true", dest="apply_norm", help="apply unit length normalization to the document-term matrix")
 	parser.add_option("--minlen", action="store", type="int", dest="min_doc_length", help="minimum document length (in characters)", default=50)
+	parser.add_option("--ngram", action="store", type="int", dest="max_ngram", help="maximum ngram range (default is 1, i.e. unigrams only)", default=1)
 	parser.add_option("-s", action="store", type="string", dest="stoplist_file", help="custom stopword file path", default=None)
 	parser.add_option("-o", action="store", type="string", dest="prefix", help="output prefix for corpus files", default=None)
 	parser.add_option("--debug", action="store_true", dest="debug", help="enable debugging information", default=False)
@@ -103,10 +104,10 @@ def main():
 		log.info("Using %d stopwords from %s" % (len(stopwords), options.stoplist_file) )
 
 	# Convert the documents to a vector representation
-	log.info("Preprocessing data (%d stopwords, tfidf=%s, normalize=%s, min_df=%d) ..." % 
-		(len(stopwords), options.apply_tfidf, options.apply_norm, options.min_df))
+	log.info("Preprocessing data (%d stopwords, tfidf=%s, normalize=%s, min_df=%d, max_ngram=%d) ..." % 
+		(len(stopwords), options.apply_tfidf, options.apply_norm, options.min_df, options.max_ngram))
 	(X,terms) = text.util.preprocess(documents, stopwords, min_df = options.min_df, 
-		apply_tfidf = options.apply_tfidf, apply_norm = options.apply_norm)
+		apply_tfidf = options.apply_tfidf, apply_norm = options.apply_norm, ngram_range = (1,options.max_ngram))
 	log.info("Built document-term matrix: %d documents, %d terms" % (X.shape[0], X.shape[1]))
 	
 	# Save the preprocessed corpus

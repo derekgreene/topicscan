@@ -109,6 +109,7 @@ class FileTokenGenerator:
 		for in_path in self.file_paths:
 			doc = read_text( in_path ).lower()
 			if len(doc) < self.min_doc_length:
+				log.debug("Skipping short document: %s" % in_path)
 				continue
 			tokens = []
 			for tok in custom_tokenizer(doc):
@@ -130,6 +131,7 @@ class LineTokenGenerator(FileTokenGenerator):
 			text = read_text( in_path ).lower()
 			for doc in text.split("\n"):
 				if len(doc) < self.min_doc_length:
+					log.debug("Skipping short document: %s" % in_path)
 					continue
 				tokens = []
 				for tok in custom_tokenizer(doc):
