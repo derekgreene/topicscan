@@ -96,7 +96,6 @@ class WebCore:
 		extension = config.get("file_extension", ".meta")
 		meta_file_paths = self.dir_core.glob('**/*' + extension)
 		for meta_file_path in meta_file_paths:
-			log.debug("Checking metadata from %s" % meta_file_path)
 			try:
 				with open(meta_file_path, "r") as fin:
 					data = json.load(fin)
