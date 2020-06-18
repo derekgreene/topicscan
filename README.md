@@ -44,13 +44,13 @@ two possible input formats for files:
 1. Each text file correspond to a single document.
 2. Every line of each text file represents a separate document. 
 
-Example where every line in each file represents a separate document:
-
-``` python prep_text.py -s text/stopwords/english.txt --tfidf --norm -o data/prep/bbc data/corpora/bbc/*```
-
 Example where every line of each text file represents a separate document:
 
 ``` python prep_text.py -s text/stopwords/english.txt --tfidf --norm -o data/prep/bbc --lines data/corpora/bbc.txt```
+
+Example where every line in each file represents a separate document:
+
+``` python prep_text.py -s text/stopwords/english.txt --tfidf --norm -o data/prep/bbc data/corpora/bbc/*```
 
 ## Usage: Generating Topic Models
 
@@ -89,6 +89,8 @@ To start the TopicScan interface, run the script *scan.py*. By default this will
 We can also specify an alternative working directory to search:
 
 ```python scan.py data/```
+
+Once the local web server has started, you should be able to access it in your browser at [http://127.0.0.1:8050](http://127.0.0.1:8050)
 
 The different pages of TopicScan interface can also be run individually. In each case, we need to specify the path to the relevant metadata file(s):
 
