@@ -101,7 +101,7 @@ def main():
 	stopwords = set()
 	if not options.stoplist_file is None:
 		stopwords = text.util.load_word_set(options.stoplist_file)
-		log.info("Using %d stopwords from %s" % (len(stopwords), options.stoplist_file) )
+		log.info("Using %d stopwords from %s" % (len(stopwords), options.stoplist_file))
 
 	# Convert the documents to a vector representation
 	log.info("Preprocessing data (%d stopwords, tfidf=%s, normalize=%s, min_df=%d, max_ngram=%d) ..." % 

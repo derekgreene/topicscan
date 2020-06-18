@@ -75,9 +75,9 @@ def main():
 
 	# process all specified inputs
 	if options.is_lines:
-		token_generator = text.util.LineTokenGenerator(file_paths, options.min_doc_length, stopwords )
+		token_generator = text.util.LineTokenGenerator(file_paths, options.min_doc_length, stopwords)
 	else:
-		token_generator = text.util.FileTokenGenerator(file_paths, options.min_doc_length, stopwords )
+		token_generator = text.util.FileTokenGenerator(file_paths, options.min_doc_length, stopwords)
 
 	# build the Word2Vec embedding from the documents that we have found
 	log.info( "Building Word2vec %s embedding..." % options.embed_type )
