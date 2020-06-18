@@ -125,7 +125,11 @@ class IndexLayout( GeneralLayout ):
 
 	def generate_model_table( self ):
 		""" Generate a Bootstrap table containing list of current topic model metadata. """
-		df = self.webcore.df_models.sort_values( by=["Corpus","Name"] )
+		df = self.webcore.df_models
+		# watch out for empty tables
+		if len(df) == 0:
+			return ""
+		df = df.sort_values( by=["Corpus","Name"] )
 		alignments = { "Topics" : "right", "Documents" : "right", "Terms" : "right" }
 		# create the links to other pages
 		links = {}
@@ -143,7 +147,11 @@ class IndexLayout( GeneralLayout ):
 
 	def generate_embedding_table( self ):
 		""" Generate a Bootstrap table containing list of current word embedding metadata. """
-		df = self.webcore.df_embeddings.sort_values( by="Name" )
+		df = self.webcore.df_embeddings
+		# watch out for empty tables
+		if len(df) == 0:
+			return ""
+		df = df.sort_values( by="Name" )
 		alignments = { "Dimensions" : "right", "Terms" : "right" }
 		# create the links to other pages
 		links = {}
