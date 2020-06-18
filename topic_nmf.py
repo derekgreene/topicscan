@@ -45,9 +45,14 @@ def main():
 		dir_out_base = Path.cwd()
 	else:
 		dir_out_base = Path(options.dir_out)
-		if not ( dir_out_base.exists() and dir_out_base.is_dir() ):
-			log.error("Error: Invalid output directory %s" % dir_out_base)
-			sys.exit(1)
+		# need to create the output directory?
+		if not dir_out_base.exists():
+			try:
+				log.info("Creating directory %s" % dir_out_base)
+				dir_out_base.mkdir(parents=True, exist_ok=True)
+			except:
+				log.error("Error: Invalid output directory %s" % dir_out_base)
+				sys.exit(1)
 
 	# load the preprocessed corpus
 	corpus_path = Path(args[0])
