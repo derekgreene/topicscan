@@ -5,7 +5,7 @@ Script implementing the main TopicScan web interface.
 Sample usage:
 ``` python scan.py ~/sample ```
 """
-import sys
+import sys, threading, webbrowser
 from urllib.parse import urlparse, parse_qs
 from pathlib import Path
 import logging as log
@@ -50,8 +50,9 @@ def parse_page_url(href):
 
 def main():
 	parser = OptionParser(usage="usage: %prog [options] working_directory")
+	parser.add_option("--port", action="store", type="int", dest="port", help="port number (default=8500)", default=8500)
 	parser.add_option("--preload", action="store_true", dest="preload", help="preload all word embeddings", default=False)
-	parser.add_option("--debug", action="store_true", dest="debug", help="enable debugging information", default=True)
+	parser.add_option("--debug", action="store_true", dest="debug", help="enable debugging information", default=False)
 	(options, args) = parser.parse_args()
 	# control level of log output
 	log_level = log.DEBUG if options.debug else log.INFO
@@ -204,8 +205,11 @@ def main():
 		log.debug("Callback: on_checkbox_change: %s" % layout_index.checkbox_state)
 		return layout_index.generate_model_button()
 
+	# set browser to open
+	local_url = "http://127.0.0.1:{0}".format(options.port)
+	threading.Timer(1.25, lambda: webbrowser.open(local_url)).start()
 	# start the web server
-	app.run_server(debug=options.debug)
+	app.run_server(port=options.port, debug=options.debug)
 
 # --------------------------------------------------------------
 
