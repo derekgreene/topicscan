@@ -14,16 +14,18 @@ Three sample corpora are provided for use with *TopicScan*:
 
 A number of pretrained word embeddings for use with *TopicScan* are listd below. Note these are hosted elsewhere and can be downloaded and placed in your local working directory. 
 
+Each ZIP archive contains two files: (1) a BIN file which contains the embedding matrix in the same binary format used by the original C word2vec-tool; (2) a META file which contains metadata describing the embedding in JSON format.
+
 | Embedding                   | Algorithm     | Description                                                                            | Terms   | Download    |
 |-----------------------------|---------------|----------------------------------------------------------------------------------------|---------|-------------|
-| *cnndailymail-w2v-cbow-d100*  | word2vec cbow | Collection of 312k CNN and Daily Mail news articles, compiled by Hermann et al in 2015. | 243863  | ZIP (95MB)  |
-| *cnndailymail-w2v-sg-d100*    | word2vec sg   | Collection of 312k CNN and Daily Mail news articles, compiled by Hermann et al in 2015. | 243863  | ZIP (95MB)  |
-| *guardian15-w2v-cbow-d100*    | word2vec cbow | Corpus of over 1.5m articles from 15 years of Guardian online news, compiled by Belford & Greene.                     | 557937  | ZIP (218MB) |
-| *guardian15-w2v-sg-d100*      | word2vec sg   | Corpus of over 1.5m articles from 15 years of Guardian online news, compiled by Belford & Greene                     | 557937  | ZIP (218MB) |
-| *wapo-w2v-cbow-d100*          | word2vec cbow | A corpus of 595k Washington Post news articles from the [TREC News Track](http://trec-news.org/).                | 298515  | ZIP (117MB) |
-| *wapo-w2v-sg-d100*            | word2vec sg   | A corpus of 595k Washington Post news articles from the [TREC News Track](http://trec-news.org/).                 | 298515  | ZIP (117MB) |
-| *wikipedia2016-w2v-cbow-d100* | word2vec cbow | Collection of 4.9m Wikipedia long abstracts, compiled by Qureshi & Greene in 2016.                                  | 1333306 | ZIP (521MB) |
-| *wikipedia2016-w2v-sg-d100*   | word2vec sg   | Collection of 4.9m Wikipedia long abstracts, compiled by Qureshi & Greene in 2016.                                 | 1333306 | ZIP (521MB) |
+| *cnndailymail-w2v-cbow-d100*  | word2vec cbow | Collection of 312k CNN and Daily Mail news articles, compiled by Hermann et al in 2015. | 243863  | [ZIP (89MB)](http://erdos.ucd.ie/embeddings/cnndailymail-w2v-cbow-d100.zip)  |
+| *cnndailymail-w2v-sg-d100*    | word2vec sg   | Collection of 312k CNN and Daily Mail news articles, compiled by Hermann et al in 2015. | 243863  | [ZIP (89MB)](http://erdos.ucd.ie/embeddings/cnndailymail-w2v-sg-d100.zip)  |
+| *guardian15-w2v-cbow-d100*    | word2vec cbow | Corpus of over 1.5m articles from 15 years of Guardian online news, compiled by Belford & Greene.   | 557937  | [ZIP (203MB)](http://erdos.ucd.ie/embeddings/guardian15-w2v-cbow-d100.zip) |
+| *guardian15-w2v-sg-d100*      | word2vec sg   | Corpus of over 1.5m articles from 15 years of Guardian online news, compiled by Belford & Greene.   | 557937  | [ZIP (203MB)](http://erdos.ucd.ie/embeddings/guardian15-w2v-sg-d100.zip) |
+| *wapo-w2v-cbow-d100*          | word2vec cbow | A corpus of 595k Washington Post news articles from the [TREC News Track](http://trec-news.org/).  | 298515  | [ZIP (109MB)](http://erdos.ucd.ie/embeddings/wapo-w2v-cbow-d100.zip) |
+| *wapo-w2v-sg-d100*            | word2vec sg   | A corpus of 595k Washington Post news articles from the [TREC News Track](http://trec-news.org/).   | 298515  | [ZIP (109MB)](http://erdos.ucd.ie/embeddings/wapo-w2v-sg-d100.zip) |
+| *wikipedia2016-w2v-cbow-d100* | word2vec cbow | Collection of 4.9m Wikipedia long abstracts, compiled by Qureshi & Greene in 2016.   | 1333306 | [ZIP (485MB)](http://erdos.ucd.ie/embeddings/wikipedia2016-w2v-cbow-d100.zip) |
+| *wikipedia2016-w2v-sg-d100*   | word2vec sg   | Collection of 4.9m Wikipedia long abstracts, compiled by Qureshi & Greene in 2016.  | 1333306 | [ZIP (484MB)](http://erdos.ucd.ie/embeddings/wikipedia2016-w2v-sg-d100.zip) |
 
 
 ### References
