@@ -24,7 +24,7 @@ Tested with Python 3.7, and requiring the following packages, which are availabl
 
 - pandas, numpy, matplotlib
 - scikit-learn, gensim
-- dash, dash-table, dash-bootstrap-components
+- dash, dash-bootstrap-components
 
 ## Usage Overview
 
