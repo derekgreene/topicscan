@@ -28,13 +28,15 @@ Tested with Python 3.7, and requiring the following packages, which are availabl
 
 ## Usage Overview
 
+See [here](http://erdos.ucd.ie/topicscan/demo.mp4) for a video demonstrating the functionality of TopicScan.
+
 Using TopicScan involves the follow steps:
 
 1. Preprocessing the plain text data for your corpus.
 2. Generate one or more topic models using NMF on your preprocessed corpus files.
 3. Explore and compare the resulting topic models in the TopicScan web interface.
 
-To validate and visualize your topic models, you will also need one or more pre-trained word embeddingss.
+To validate and visualize your topic models, you will also need one or more pre-trained word embeddings. Links to a number of pre-trained embeddings are provided [here](corpora/).
 
 ## Usage: Preprocessing Corpora
 
