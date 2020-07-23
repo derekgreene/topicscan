@@ -26,6 +26,7 @@ Once the models have been generated and stored in the directory data/models, we 
 
 ```python scan.py data/```
 
+
 ## Example: BBC Dataset
 
 To demonstrate the use of the system, we consider the exploration of topics generated from the *bbc* corpus, which consists of 2225 documents from the BBC news website corresponding to stories in five topical areas from 2004-2005.
